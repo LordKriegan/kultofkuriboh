@@ -20,7 +20,7 @@ module.exports = model("User", new Schema({
             }
         }
     },
-    rating: { type: Number, required: true },
+    rating: { type: Number, default: 1000 },
     picture: { type: String, default: "/assets/images/defaultUser.png" },
     biography: { type: String, default: "This user does not have a biography.", maxlength: 500 },
     address: { type: String, required: true },
