@@ -1,6 +1,20 @@
 const router = require('express').Router();
 const { Trade, UserTrade, User } = require('../../models');
 router.post('/addNew', (req,res) => {
+    /*
+    example body
+    {
+	"sender": {
+		"cards": [{"name": "blue eyes", "set": "lob", "quantity": 4}, {"name": "lord of d", "set": "lob", "quantity": 4}],
+		"id": "5d26c37c6d37653e506038a6"
+	},
+	"reciever": {
+		"cards": [{"name": "red eyes", "set": "lob", "quantity": 4}, {"name": "red eyes wyvern", "set": "lob", "quantity": 4}],
+		"id": "5d26cd422f61b30fdcb6078f"
+	},
+	"sentBy": "5d26c37c6d37653e506038a6"
+    }
+    */
     const newTrade = {
         accepted: "pending",
         sentBy: req.body.sender.id,
