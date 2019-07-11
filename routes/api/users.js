@@ -116,4 +116,24 @@ router.put("/wants", (req, res) => {
         res.json('User Updated!');
     });
 });
+
+router.get("/findHaves", (req, res) => {
+    User.find({ "haves.name": req.query.name, "haves.set": req.query.set}, {salt: 0, hash: 0, address: 0, trades: 0, chats: 0}, (err, resp) => {
+        if (err) {
+            console.error(err);
+        }
+        console.log(resp)
+        res.json(resp);
+    });
+});
+
+router.get("/findWants", (req, res) => {
+    User.find({ "wants.name": req.query.name, "wants.set": req.query.set}, {salt: 0, hash: 0, address: 0, trades: 0, chats: 0}, (err, resp) => {
+        if (err) {
+            console.error(err);
+        }
+        console.log(resp)
+        res.json(resp);
+    });
+});
 module.exports = router;
