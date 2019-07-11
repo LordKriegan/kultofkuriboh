@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Trade, UserTrade, User } = require('../../models');
-router.post('/addNew', (req,res) => {
+router.post('/addNew', (req, res) => {
     /*
     example body
     {
@@ -16,43 +16,42 @@ router.post('/addNew', (req,res) => {
     }
     */
     const newTrade = {
-        accepted: "pending",
         sentBy: req.body.sender.id,
-        users: [{
-                    cards: req.body.sender.cards,
-                    recieved: "pending",
-                    userId: req.body.sender.id
-                },
-                {
-                    cards: req.body.reciever.cards,
-                    recieved: "pending",
-                    userId: req.body.reciever.id
-                }]
+        sender: {
+            cards: req.body.sender.cards,
+            recieved: "pending",
+            userId: req.body.sender.id
+        },
+        reciever: {
+            cards: req.body.reciever.cards,
+            recieved: "pending",
+            userId: req.body.reciever.id
+        }
     }
 
     Trade
         .create(newTrade)
         .then((response) => {
             console.log("user trade created");
-            User.updateMany({ _id: {$in: [req.body.sender.id, req.body.reciever.id] }}, { $push: { trades: response._id }}, (err, resp) => {
+            User.updateMany({ _id: { $in: [req.body.sender.id, req.body.reciever.id] } }, { $push: { trades: response._id } }, (err, resp) => {
                 if (err) {
-                    res.status(500).json({error: err});
+                    res.status(500).json({ error: err });
                 }
                 res.json("Trade added to database!")
             });
         })
         .catch((err) => {
-            res.status(500).json({error: err})
+            res.status(500).json({ error: err })
         });
 });
 
 router.get("/findAll/:userId", (req, res) => {
     User.findById(req.params.userId, (err, resp) => {
-        if(err) {
+        if (err) {
             res.status(500).json({ error: err });
         }
-        Trade.find({ _id: { $in: resp.trades }}, (err, tradeResp) => {
-            if(err) {
+        Trade.find({ _id: { $in: resp.trades } }, (err, tradeResp) => {
+            if (err) {
                 res.status(500).json({ error: err });
             }
             res.json(tradeResp);
@@ -62,12 +61,49 @@ router.get("/findAll/:userId", (req, res) => {
 
 router.get("/findOne/:id", (req, res) => {
     Trade.findById(req.params.id, (err, resp) => {
-       if (err) {
-           res.status(500).json({ error: err });
-       }
-       res.json(resp);
+        if (err) {
+            res.status(500).json({ error: err });
+        }
+        res.json(resp);
     });
 });
 
+router.put("/acceptStatus", (req, res) => {
+    Trade.findByIdAndUpdate(req.body.id, { accepted: req.body.acceptStatus }, (err, resp) => {
+        if (err) {
+            res.status(500).json({ error: err })
+        }
+        res.json("User Trade Updated");
+    });
+});
 
+router.put("recievedStatus", (req, res) => {
+    /*
+        sample body: {
+            trader: "sender"/"reciever",
+            recieved: "yes"/"no"
+            id: "trade id"
+        }
+        find trade
+        check if sender or reciever
+        if sender update sender.recieved
+            get trade.reciever._id
+            find reciever
+            let recieverRating = reciever.rating
+            if sender.recieved === no
+                recieverRating -= 50
+            else
+                recieverRating += 25
+            reciever.update rating then send back response
+        else update reciever.recieved
+            get trade.sender._id
+            find sender
+            let senderRating = sender.rating
+            if reciever.recieved === no
+                senderRating -= 50
+            else
+                senderRating += 25
+            sender.update then send back response      
+    */
+});
 module.exports = router;
