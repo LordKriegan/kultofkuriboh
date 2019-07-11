@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { User } = require('../../models');
 const crypto = require('crypto');
 const jwt = require("jsonwebtoken");
-
+const aes256 = require('aes256');
 const getHash = (password, salt) => {
     return crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
 }
@@ -28,7 +28,7 @@ router.post("/new", (req, res) => {
         email: req.body.email,
         salt: salt,
         hash: getHash(req.body.password, salt),
-        address: req.body.address
+        address: aes256.encrypt(process.env.AES256_KEY, req.body.address)
     };
     if (req.body.picture) newUser.picture = req.body.picture;
     if (req.body.biography) newUser.biography = req.body.biography;
@@ -46,7 +46,6 @@ router.post("/login", (req, res) => {
         if (err) {
             res.status(500).json({ error: err });
         }
-        console.log(resp.length)
         if (resp.length) {
             if (resp[0].hash === getHash(req.body.password, resp[0].salt)) {
                 res.json(generateJWT(resp));
@@ -59,4 +58,44 @@ router.post("/login", (req, res) => {
     });
 });
 
+router.delete("/remove/:id", (req, res) => {
+    User.findByIdAndDelete(req.params.id, (err, resp) => {
+        if (err) {
+            res.status(500).json({error: err});
+        }
+        res.json("User deleted.");
+    });
+});
+
+router.get("/findOne/:id", (req, res) => {
+    User.findById(req.params.id, {salt: 0, hash: 0} , (err, resp) => {
+        if (err) {
+            res.status(500).json({ error: err });
+        }
+        resp.address = aes256.decrypt(process.env.AES256_KEY, resp.address);
+        res.json(resp);
+    });
+});
+
+router.put("/update", (req, res) => {
+    let updatedUser = {};
+    const { id, name, email, password, picture, biography, address } = req.body
+    if (name) updatedUser.name = name;
+    if (email) updatedUser.email = email;
+    if (password) {
+        const salt = getSalt();
+        updatedUser.salt = salt;
+        updatedUser.hash = getHash(password, salt);
+    }
+    if (picture) updatedUser.picture = picture;
+    if (biography) updatedUser.biography = biography;
+    if (address) updatedUser.address = aes256.encrypt(process.env.AES256_KEY, address);
+    console.log(updatedUser);
+    User.findByIdAndUpdate(id, updatedUser, (err, resp) => {
+        if (err) {
+            res.status(500).json({ error: err });
+        }
+        res.json('User Updated!');
+    });
+});
 module.exports = router;

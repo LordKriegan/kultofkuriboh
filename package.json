@@ -4,11 +4,12 @@
   "description": "A yugioh trading app that tracks (un/)successful trades so the user can make an informed decision before trading.",
   "main": "server.js",
   "dependencies": {
+    "aes256": "^1.0.4",
     "concurrently": "^4.1.1",
-    "dotenv": "^8.0.0",
-    "express-jwt": "^5.3.1",
     "cross-env": "^5.2.0",
+    "dotenv": "^8.0.0",
     "express": "^4.17.1",
+    "express-jwt": "^5.3.1",
     "if-env": "^1.0.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.4"
