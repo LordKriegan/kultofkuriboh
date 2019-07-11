@@ -98,4 +98,22 @@ router.put("/update", (req, res) => {
         res.json('User Updated!');
     });
 });
+
+router.put("/haves", (req, res) => {
+    User.findByIdAndUpdate(req.body.id, { haves: req.body.cards }, (err, resp) => {
+        if (err) {
+            res.status(500).json({ error: err });
+        }
+        res.json('User Updated!');
+    });
+});
+
+router.put("/wants", (req, res) => {
+    User.findByIdAndUpdate(req.body.id, { wants: req.body.cards }, (err, resp) => {
+        if (err) {
+            res.status(500).json({ error: err });
+        }
+        res.json('User Updated!');
+    });
+});
 module.exports = router;
