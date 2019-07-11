@@ -29,6 +29,7 @@ router.post('/addNew', (req,res) => {
                     userId: req.body.reciever.id
                 }]
     }
+
     Trade
         .create(newTrade)
         .then((response) => {
@@ -43,6 +44,30 @@ router.post('/addNew', (req,res) => {
         .catch((err) => {
             res.status(500).json({error: err})
         });
-})
+});
+
+router.get("/findAll/:userId", (req, res) => {
+    User.findById(req.params.userId, (err, resp) => {
+        if(err) {
+            res.status(500).json({ error: err });
+        }
+        Trade.find({ _id: { $in: resp.trades }}, (err, tradeResp) => {
+            if(err) {
+                res.status(500).json({ error: err });
+            }
+            res.json(tradeResp);
+        });
+    });
+});
+
+router.get("/findOne/:id", (req, res) => {
+    Trade.findById(req.params.id, (err, resp) => {
+       if (err) {
+           res.status(500).json({ error: err });
+       }
+       res.json(resp);
+    });
+});
+
 
 module.exports = router;
