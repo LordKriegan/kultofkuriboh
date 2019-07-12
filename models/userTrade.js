@@ -5,7 +5,7 @@ module.exports = new Schema({
     recieved: {
         type: String,
         default: "pending",
-        enum: ["accept", "pending", "reject"]
+        enum: ["yes", "pending", "no"]
     },
     userId: { type: String, required: true }
 });

@@ -61,14 +61,14 @@ router.post("/login", (req, res) => {
 router.delete("/remove/:id", (req, res) => {
     User.findByIdAndDelete(req.params.id, (err, resp) => {
         if (err) {
-            res.status(500).json({error: err});
+            res.status(500).json({ error: err });
         }
         res.json("User deleted.");
     });
 });
 
 router.get("/findOne/:id", (req, res) => {
-    User.findById(req.params.id, {salt: 0, hash: 0} , (err, resp) => {
+    User.findById(req.params.id, { salt: 0, hash: 0 }, (err, resp) => {
         if (err) {
             res.status(500).json({ error: err });
         }
@@ -118,7 +118,14 @@ router.put("/wants", (req, res) => {
 });
 
 router.get("/findHaves", (req, res) => {
-    User.find({ "haves.name": req.query.name, "haves.set": req.query.set}, {salt: 0, hash: 0, address: 0, trades: 0, chats: 0}, (err, resp) => {
+    User.find({
+        "haves.name": {
+            $regex: new RegExp("^" + req.query.name.toLowerCase(), "i")
+        },
+        "haves.set": {
+            $regex: new RegExp("^" + req.query.set.toLowerCase(), "i")
+        }
+    }, { salt: 0, hash: 0, address: 0, trades: 0, chats: 0 }, (err, resp) => {
         if (err) {
             console.error(err);
         }
@@ -128,7 +135,14 @@ router.get("/findHaves", (req, res) => {
 });
 
 router.get("/findWants", (req, res) => {
-    User.find({ "wants.name": req.query.name, "wants.set": req.query.set}, {salt: 0, hash: 0, address: 0, trades: 0, chats: 0}, (err, resp) => {
+    User.find({
+        "wants.name": {
+            $regex: new RegExp("^" + req.query.name.toLowerCase(), "i")
+        },
+        "wants.set": {
+            $regex: new RegExp("^" + req.query.set.toLowerCase(), "i")
+        }
+    }, { salt: 0, hash: 0, address: 0, trades: 0, chats: 0 }, (err, resp) => {
         if (err) {
             console.error(err);
         }

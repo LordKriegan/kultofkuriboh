@@ -131,34 +131,69 @@ router.put("/acceptStatus", (req, res) => {
     });
 });
 
-router.put("recievedStatus", (req, res) => {
-    /*
-        sample body: {
-            trader: "sender"/"reciever",
-            recieved: "yes"/"no"
-            id: "trade id"
+router.put("/recievedStatus", (req, res) => {
+    Trade.findByIdAndUpdate(req.body.id, {
+        [req.body.trader + ".recieved"]: req.body.recieved
+    }, { new: true }, (err, resp) => {
+        if (err) {
+            res.json({ error: err });
         }
-        find trade
-        check if sender or reciever
-        if sender update sender.recieved
-            get trade.reciever._id
-            find reciever
-            let recieverRating = reciever.rating
-            if sender.recieved === no
-                recieverRating -= 50
-            else
-                recieverRating += 25
-            reciever.update rating then send back response
-        else update reciever.recieved
-            get trade.sender._id
-            find sender
-            let senderRating = sender.rating
-            if reciever.recieved === no
-                senderRating -= 50
-            else
-                senderRating += 25
-            sender.update then send back response  
-        if both traders  recieved status are set, updates haves/wants on both users    
-    */
+
+        User.findByIdAndUpdate((req.body.trader === "reciever") ? resp.sender.userId : resp.reciever.userId, {
+            $inc: {
+                rating: (req.body.recieved === "yes") ? 25 : -50
+            }
+        }, (err, userResp) => {
+            if (err) {
+                res.json({ error: err });
+            }
+            if (req.body.recieved === 'yes') {
+                let userId = (req.body.trader === "reciever") ? resp.reciever.userId : resp.sender.userId
+                let cardList = (req.body.trader === "reciever") ? resp.sender.cards : resp.reciever.cards;
+                User.findById(userId, (err, userResp) => {
+                    if (err) {
+                        res.json({ error: err });
+                    }
+                    let userData = {
+                        haves: userResp.haves,
+                        wants: userResp.wants
+                    };
+                    for (var i = 0; i < cardList.length; i++) {
+                        let foundHaves = false;
+                        let foundWants = false;
+                        for (var j = 0; j < userData.haves.length; j++) {
+                            if (userData.haves[j].name.toLowerCase() === cardList[i].name.toLowerCase() && userData.haves[j].set.toLowerCase() === cardList[i].set.toLowerCase()) {
+                                userData.haves[j].quantity += cardList[i].quantity;
+                                foundHaves = true;
+                                break;
+                            }
+                        }
+                        for (var j = 0; j < userData.wants.length; j++) {
+                            if (userData.wants[j].name.toLowerCase() === cardList[i].name.toLowerCase() && userData.wants[j].set.toLowerCase() === cardList[i].set.toLowerCase()) {
+                                userData.wants[j].quantity -= cardList[i].quantity;
+                                foundWants = true;
+                                if (userData.wants[j].quantity <= 0) userData.wants.splice(j, 1);
+                                break;
+                            }
+                        }
+                        if (!foundHaves) {
+                            userData.haves.push(cardList[i]);
+                        }
+                        if (!foundWants) {
+                            userData.wants.push(cardList[i]);
+                        }
+                    }
+                    console.log(userData);
+                    User.findByIdAndUpdate(userId, userData, (err, updatedUserResp) => {
+                        if (err) {
+                            res.json({ error: err });
+                        }
+                        res.json("Trade Updated!");
+                    });
+                });
+            }
+
+        });
+    });
 });
 module.exports = router;
