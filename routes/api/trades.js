@@ -134,7 +134,7 @@ router.put("/acceptStatus", (req, res) => {
 router.put("/recievedStatus", (req, res) => {
     Trade.findByIdAndUpdate(req.body.id, {
         [req.body.trader + ".recieved"]: req.body.recieved
-    }, { new: true }, (err, resp) => {
+    }, { new: true, runValidators: true }, (err, resp) => {
         if (err) {
             res.json({ error: err });
         }
@@ -159,28 +159,23 @@ router.put("/recievedStatus", (req, res) => {
                         wants: userResp.wants
                     };
                     for (var i = 0; i < cardList.length; i++) {
-                        let foundHaves = false;
-                        let foundWants = false;
+                        let found = false;
                         for (var j = 0; j < userData.haves.length; j++) {
                             if (userData.haves[j].name.toLowerCase() === cardList[i].name.toLowerCase() && userData.haves[j].set.toLowerCase() === cardList[i].set.toLowerCase()) {
                                 userData.haves[j].quantity += cardList[i].quantity;
-                                foundHaves = true;
+                                found = true;
                                 break;
                             }
                         }
                         for (var j = 0; j < userData.wants.length; j++) {
                             if (userData.wants[j].name.toLowerCase() === cardList[i].name.toLowerCase() && userData.wants[j].set.toLowerCase() === cardList[i].set.toLowerCase()) {
                                 userData.wants[j].quantity -= cardList[i].quantity;
-                                foundWants = true;
                                 if (userData.wants[j].quantity <= 0) userData.wants.splice(j, 1);
                                 break;
                             }
                         }
-                        if (!foundHaves) {
+                        if (!found) {
                             userData.haves.push(cardList[i]);
-                        }
-                        if (!foundWants) {
-                            userData.wants.push(cardList[i]);
                         }
                     }
                     console.log(userData);
