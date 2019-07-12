@@ -1,13 +1,9 @@
-import React from 'react';
-
-import './App.css';
+import React from "react"
+import AppRouter from "../src/router"
+import "./App.css"
 
 function App() {
-  return (
-    <div>
-      <p>Placeholder react app</p>
-    </div>
-  );
+  return <AppRouter />
 }
 
-export default App;
+export default App
