@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Trade, UserTrade, User } = require('../../models');
+const aes256 = require('aes256');
 router.post('/addNew', (req, res) => {
     /*
     example body
@@ -50,20 +51,26 @@ router.get("/findAll/:userId", (req, res) => {
         if (err) {
             res.status(500).json({ error: err });
         }
-        Trade.find({ _id: { $in: resp.trades } }, (err, tradeResp) => {
+        Trade.find({ _id: { $in: resp.trades } }).populate("sender.userId reciever.userId", "picture name address").exec((err, tradeResp) => {
             if (err) {
                 res.status(500).json({ error: err });
             }
+            tradeResp.forEach((elem) => {
+                elem.sender.userId.address = aes256.decrypt(process.env.AES256_KEY, elem.sender.userId.address);
+                elem.reciever.userId.address = aes256.decrypt(process.env.AES256_KEY, elem.reciever.userId.address);
+            });
             res.json(tradeResp);
         });
     });
 });
 
 router.get("/findOne/:id", (req, res) => {
-    Trade.findById(req.params.id, (err, resp) => {
+    Trade.findById(req.params.id).populate("sender.userId reciever.userId", "picture name address").exec((err, resp) => {
         if (err) {
             res.status(500).json({ error: err });
         }
+        resp.sender.userId.address = aes256.decrypt(process.env.AES256_KEY, resp.sender.userId.address);
+        resp.reciever.userId.address = aes256.decrypt(process.env.AES256_KEY, resp.reciever.userId.address);
         res.json(resp);
     });
 });
