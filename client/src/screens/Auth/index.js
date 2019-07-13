@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react"
-// import { User } from "../../api"
-import { Button, Input } from "../../components"
+import React, { useState } from "react"
+import { Button, Card, Input } from "../../components"
 
 export default function Auth({ location }) {
   const [register, toggleRegister] = useState(false)
@@ -14,35 +13,29 @@ export default function Auth({ location }) {
     setAuthFields({ [id]: value })
   }
 
-  // const RegisterUser = () => User.register({ email, name, password })
-
   const Login = (
     <div>
-      <div>This is the login</div>
-      <Input id="email" onChange={updateAuthFields} value={email} />
-      <Input id="password" onChange={updateAuthFields} value={password} />
-      <div>
-        <Button primary onClick={() => toggleRegister(!register)}>
-          Login
-        </Button>
-        <Button primary onClick={() => toggleRegister(!register)}>
-          Go To Register
-        </Button>
-      </div>
+      <Card>
+        <Input id="email" onChange={updateAuthFields} value={email} label="Email" />
+        <Input id="password" onChange={updateAuthFields} value={password} label="Password" />
+        <div>
+          <Button onClick={() => toggleRegister(!register)} text="Login" type="primary" />
+          <Button onClick={() => toggleRegister(!register)} text="Go To Register" type="outlined" />
+        </div>
+      </Card>
     </div>
   )
   const Register = (
     <div>
-      <div>This is the register</div>
-      <Input id="email" onChange={updateAuthFields} value={email} />
-      <Input id="name" onChange={updateAuthFields} value={name} />
-      <Input id="password" onChange={updateAuthFields} value={password} />
-      <div>
-        <Button primary>Register</Button>
-        <Button primary onClick={() => toggleRegister(!register)}>
-          Go To Login
-        </Button>
-      </div>
+      <Card>
+        <Input id="email" onChange={updateAuthFields} value={email} label="Email" />
+        <Input id="name" onChange={updateAuthFields} value={name} label="Name" />
+        <Input id="password" onChange={updateAuthFields} value={password} label="Password" />
+        <div>
+          <Button text="Register" type="primary" />
+          <Button onClick={() => toggleRegister(!register)} text="Go to Login" type="outlined" />
+        </div>
+      </Card>
     </div>
   )
 
