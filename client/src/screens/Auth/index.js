@@ -38,9 +38,7 @@ export default function Auth({ location }) {
       <Input id="name" onChange={updateAuthFields} value={name} />
       <Input id="password" onChange={updateAuthFields} value={password} />
       <div>
-        <Button primary onClick={RegisterUser}>
-          Register
-        </Button>
+        <Button primary>Register</Button>
         <Button primary onClick={() => toggleRegister(!register)}>
           Go To Login
         </Button>
