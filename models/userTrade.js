@@ -7,5 +7,5 @@ module.exports = new Schema({
         default: "pending",
         enum: ["yes", "pending", "no"]
     },
-    userId: { type: String, required: true }
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true }
 });
