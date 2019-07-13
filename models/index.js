@@ -1,5 +1,6 @@
 module.exports = {
     User: require('./user.js'),
     Trade: require('./trade.js'),
-    Chat: require('./chat.js')
+    UserTrade: require('./userTrade.js'),
+    Card: require('./card.js')
 };
