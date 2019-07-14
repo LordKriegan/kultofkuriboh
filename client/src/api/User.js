@@ -11,6 +11,10 @@ class User {
     this.setTokenInfo(data)
   }
 
+  getUserToken() {
+    return localStorage.getItem("user") || null
+  }
+
   setTokenInfo(token) {
     localStorage.setItem("user", token)
   }

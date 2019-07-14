@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { User } from "../../api"
 import { Button, Card, Input } from "../../components"
 
-export default function Auth({ location }) {
+export default function Auth({ history }) {
   const [register, toggleRegister] = useState(false)
   const [{ loginEmail, loginPassword }, setLoginFields] = useState({
     loginEmail: "",
@@ -33,8 +33,14 @@ export default function Auth({ location }) {
     })
   }
 
-  const handleLogin = () => User.login({ email: loginEmail, password: loginPassword })
-  const handleRegister = () => User.register({ address, email, name, password })
+  const handleLogin = () =>
+    User.login({ email: loginEmail, password: loginPassword })
+      .then(() => history.push("/home"))
+      .catch(e => alert(e))
+  const handleRegister = () =>
+    User.register({ address, email, name, password })
+      .then(() => history.push("/home"))
+      .catch(e => alert(e))
   const handleToggle = () => toggleRegister(!register)
 
   const Login = (
