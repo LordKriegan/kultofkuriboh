@@ -16,8 +16,6 @@ export default function Auth({ location }) {
   })
 
   const updateLoginFields = ({ target: { id, value } }) => {
-    console.log("=".repeat(50), "loginEmail", "=".repeat(50), "\n", loginEmail)
-    console.log("=".repeat(50), "loginPassword", "=".repeat(50), "\n", loginPassword)
     setLoginFields({
       loginEmail,
       loginPassword,
