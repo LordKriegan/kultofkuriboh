@@ -59,7 +59,7 @@ export default function Auth({ history }) {
           label="Password"
         />
         <div>
-          <Button onClick={handleLogin} text="Login" type="primary" />
+          <Button onClick={handleLogin} text="Login" type="contained" />
           <Button onClick={handleToggle} text="Go To Register" type="outlined" />
         </div>
       </Card>
@@ -78,7 +78,7 @@ export default function Auth({ history }) {
           label="Password"
         />
         <div>
-          <Button onClick={handleRegister} text="Register" type="primary" />
+          <Button onClick={handleRegister} text="Register" type="contained" />
           <Button onClick={handleToggle} text="Go to Login" type="outlined" />
         </div>
       </Card>

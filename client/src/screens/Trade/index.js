@@ -1,10 +1,10 @@
 import React from "react"
 import { Typography } from "../../components"
 
-export default function Home() {
+export default function Trade() {
   return (
     <div>
-      <Typography text="Home Page" type="h2" />
+      <Typography text="Trade Page" type="h2" />
     </div>
   )
 }
