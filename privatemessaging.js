@@ -4,7 +4,7 @@ const { User, Chat } = require('./models');
 module.exports = (io) => {
     io.sockets.on('connection', (socket) => {
         
-        socket.on('connectUser', (data, cb) => {
+        socket.on('connectUser', (data) => {
             if (data in connectedUsers) {
                 console.log("User already connected")
             } else {
