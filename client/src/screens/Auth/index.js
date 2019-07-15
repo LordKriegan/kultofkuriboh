@@ -1,26 +1,67 @@
 import React, { useState } from "react"
-import { Button, Card, Input } from "../../components"
+import { User } from "../../api"
+import { Button, Card, Input, Typography } from "../../components"
 
-export default function Auth({ location }) {
+export default function Auth({ history }) {
   const [register, toggleRegister] = useState(false)
-  const [{ email, name, password }, setAuthFields] = useState({
+  const [{ loginEmail, loginPassword }, setLoginFields] = useState({
+    loginEmail: "",
+    loginPassword: "",
+  })
+  const [{ address, email, name, password }, setRegisterFields] = useState({
+    address: "",
     email: "",
     name: "",
     password: "",
   })
 
-  const updateAuthFields = ({ target: { id, value } }) => {
-    setAuthFields({ [id]: value })
+  const updateLoginFields = ({ target: { id, value } }) => {
+    setLoginFields({
+      loginEmail,
+      loginPassword,
+      [id]: value,
+    })
   }
+
+  const updateRegisterFields = ({ target: { id, value } }) => {
+    setRegisterFields({
+      address,
+      email,
+      name,
+      password,
+      [id]: value,
+    })
+  }
+
+  const handleLogin = () =>
+    User.login({ email: loginEmail, password: loginPassword })
+      .then(() => history.push("/home"))
+      .catch(e => alert(e))
+  const handleRegister = () =>
+    User.register({ address, email, name, password })
+      .then(() => history.push("/home"))
+      .catch(e => alert(e))
+  const handleToggle = () => toggleRegister(!register)
 
   const Login = (
     <div>
       <Card>
-        <Input id="email" onChange={updateAuthFields} value={email} label="Email" />
-        <Input id="password" onChange={updateAuthFields} value={password} label="Password" />
+        <Typography type="h4" text="Login" />
+        <Input
+          id="loginEmail"
+          onChange={updateLoginFields}
+          value={loginEmail || ""}
+          label="Email"
+        />
+        <Input
+          id="loginPassword"
+          onChange={updateLoginFields}
+          value={loginPassword || ""}
+          label="Password"
+        />
         <div>
-          <Button onClick={() => toggleRegister(!register)} text="Login" type="primary" />
-          <Button onClick={() => toggleRegister(!register)} text="Go To Register" type="outlined" />
+          <Button onClick={handleLogin} text="Login" type="contained" />
+          <Button onClick={handleToggle} text="Go To Register" type="outlined" />
         </div>
       </Card>
     </div>
@@ -28,12 +69,19 @@ export default function Auth({ location }) {
   const Register = (
     <div>
       <Card>
-        <Input id="email" onChange={updateAuthFields} value={email} label="Email" />
-        <Input id="name" onChange={updateAuthFields} value={name} label="Name" />
-        <Input id="password" onChange={updateAuthFields} value={password} label="Password" />
+        <Typography type="h4" text="Register" />
+        <Input id="address" onChange={updateRegisterFields} value={address || ""} label="Address" />
+        <Input id="email" onChange={updateRegisterFields} value={email || ""} label="Email" />
+        <Input id="name" onChange={updateRegisterFields} value={name || ""} label="Name" />
+        <Input
+          id="password"
+          onChange={updateRegisterFields}
+          value={password || ""}
+          label="Password"
+        />
         <div>
-          <Button text="Register" type="primary" />
-          <Button onClick={() => toggleRegister(!register)} text="Go to Login" type="outlined" />
+          <Button onClick={handleRegister} text="Register" type="contained" />
+          <Button onClick={handleToggle} text="Go to Login" type="outlined" />
         </div>
       </Card>
     </div>

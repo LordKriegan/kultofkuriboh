@@ -3,15 +3,18 @@ import { makeStyles, createStyles } from "@material-ui/core/styles"
 export default makeStyles(theme =>
   createStyles({
     button: {
+      color: "#d3d3d3",
       margin: "1em",
     },
-    primary: {
-      backgroundColor: "blue",
-      color: "white",
+    contained: {
+      backgroundColor: "#da2777",
+      "&:hover": {
+        backgroundColor: "#f91c7f",
+      },
     },
     outlined: {
-      backgroundColor: "transparent",
-      border: "1px solid blue",
+      border: "2px solid #da2777",
+      color: "#da2777",
     },
   }),
 )

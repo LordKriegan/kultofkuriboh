@@ -1,15 +1,31 @@
 import React from "react"
-import { Router, Route, Switch } from "react-router-dom"
+import { Redirect, Router, Route, Switch } from "react-router-dom"
 import { createBrowserHistory } from "history"
-
+import { User } from "../api"
 import * as screens from "../screens"
+
+const PublicRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    component={props => (User.getToken() ? <Redirect to="/home" /> : <Component {...props} />)}
+  />
+)
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    component={props => (User.getToken() ? <Component {...props} /> : <Redirect to="/" />)}
+  />
+)
 
 export default () => {
   return (
     <Router history={createBrowserHistory()}>
       <Switch>
-        <Route path="/" component={screens.Auth} exact />
-        <Route path="/home" component={screens.Home} exact />
+        <PublicRoute path="/" component={screens.Auth} exact />
+        <PrivateRoute path="/home" component={screens.Home} exact />
+        <PrivateRoute path="/profile" component={screens.Profile} exact />
+        <PrivateRoute path="/trade" component={screens.Trade} exact />
         <Route component={screens.NotFound} />
       </Switch>
     </Router>
