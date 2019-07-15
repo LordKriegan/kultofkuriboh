@@ -15,7 +15,7 @@ const generateJWT = user => {
   let userObj = {
     id: user._id,
     email: user.email,
-    username: user.name,
+    name: user.name,
     exp: expire.getTime() / 1000,
   }
   return jwt.sign(userObj, process.env.JWT_SECRET)
@@ -89,11 +89,11 @@ router.put("/update", (req, res) => {
   if (biography) updatedUser.biography = biography
   if (address) updatedUser.address = aes256.encrypt(process.env.AES256_KEY, address)
   console.log(updatedUser)
-  User.findByIdAndUpdate(id, updatedUser, (err, resp) => {
+  User.findByIdAndUpdate(id, updatedUser, { new: true }, (err, resp) => {
     if (err) {
       res.status(500).json({ error: err })
     }
-    res.json("User Updated!")
+    res.status(201).json(generateJWT(resp))
   })
 })
 
