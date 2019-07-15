@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { User } from "../../api"
-import { Button, Card, Input } from "../../components"
+import { Button, Card, Input, Typography } from "../../components"
 
 export default function Auth({ history }) {
   const [register, toggleRegister] = useState(false)
@@ -46,6 +46,7 @@ export default function Auth({ history }) {
   const Login = (
     <div>
       <Card>
+        <Typography type="h4" text="Login" />
         <Input
           id="loginEmail"
           onChange={updateLoginFields}
@@ -68,6 +69,7 @@ export default function Auth({ history }) {
   const Register = (
     <div>
       <Card>
+        <Typography type="h4" text="Register" />
         <Input id="address" onChange={updateRegisterFields} value={address || ""} label="Address" />
         <Input id="email" onChange={updateRegisterFields} value={email || ""} label="Email" />
         <Input id="name" onChange={updateRegisterFields} value={name || ""} label="Name" />
