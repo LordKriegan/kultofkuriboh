@@ -7,14 +7,18 @@ import * as screens from "../screens"
 const PublicRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
-    component={props => (User.getToken() ? <Redirect to="/home" /> : <Component {...props} />)}
+    component={props =>
+      User.getToken() ? <Redirect to="/home" /> : <Component {...props} user={User.getUser()} />
+    }
   />
 )
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
-    component={props => (User.getToken() ? <Component {...props} /> : <Redirect to="/" />)}
+    component={props =>
+      User.getToken() ? <Component {...props} user={User.getUser()} /> : <Redirect to="/" />
+    }
   />
 )
 
