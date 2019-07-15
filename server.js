@@ -9,6 +9,11 @@ const path = require("path")
 const app = express()
 const mongoose = require("mongoose")
 const logger = require("morgan")
+const server = require('http').createServer(app)
+const io = require('socket.io').listen(server)
+
+//seperated for sake of cleanliness
+require('./privatemessaging')(io)
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -31,6 +36,6 @@ mongoose
     useCreateIndex: true,
   })
   .then(_ =>
-    app.listen(process.env.PORT || 3001, () => console.log("Starting server on port 3001!")),
+    server.listen(process.env.PORT || 3001, () => console.log("Starting server on port 3001!")),
   )
   .catch(e => console.log(e))

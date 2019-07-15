@@ -32,11 +32,15 @@ router.post("/new", (req, res) => {
   }
   if (req.body.picture) newUser.picture = req.body.picture
   if (req.body.biography) newUser.biography = req.body.biography
+  
   User.create(newUser)
     .then(response => {
       res.json(generateJWT(response))
     })
-    .catch(error => res.status(400).json(error))
+    .catch(error => { 
+      console.log(error)
+      res.status(400).json(error) 
+    })
 })
 
 router.post("/login", (req, res) => {
