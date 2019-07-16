@@ -6,20 +6,30 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import NavigateNext from '@material-ui/icons/NavigateNext';
-const useStyles = makeStyles({
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import HomeIcon from '@material-ui/icons/Home'
+const useStyles = makeStyles(theme => ({
     list: {
         width: 250,
     },
     btn: {
       
         top: "-50"
+    },
+    root: {
+        flexGrow: 1
+    },
+    menuButton: {
+        marginRight: theme.spacing(2)
     }
-});
+}));
 
 const AppDrawer = () => {
     const classes = useStyles();
-    const [state, setState] = React.useState({
+    const [state, setState] = useState({
         left: false
     });
 
@@ -70,7 +80,19 @@ const AppDrawer = () => {
 
     return (
         <div>
-            <NavigateNext styles={classes.btn} onClick={toggleDrawer('left', true)}/>
+            {/* <NavigateNext styles={classes.btn} onClick={toggleDrawer('left', true)}/> */}
+            <div className={classes.root}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="Menu">
+                            <HomeIcon onClick={toggleDrawer('left', true)}/>
+                        </IconButton>
+                        <Typography align="center" variant="h3" className={classes.root}>
+                            YGO TRADE HUB
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+            </div>
             <Drawer open={state.left} onClose={toggleDrawer('left', false)}>
                 {sideList('left')}
             </Drawer>
