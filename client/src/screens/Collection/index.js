@@ -25,6 +25,10 @@ const Collection = () => {
             });
     }, []);
 
+    useEffect(() => {
+        console.log(cardData);
+    }, [cardData]);
+
     const setCardName = (cardName) => {
         setCardData({ ...cardData, cardName: cardName });
     }
@@ -72,25 +76,25 @@ const Collection = () => {
     }
     const removeFromList = (index, list) => {
         let newList = [...cardData[list]];
-        newList.slice(index, 1);
+        newList.splice(index, 1);
         setCardData({ ...cardData, [list]: newList});
     }
     return (
         <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={5}>
                 <CardSearcher saveCollection={saveCollection} changeCard={setCardName} addToList={addToList} />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={7}>
                 <Grid item xs={12}>
                     <CardViewer cardName={cardData.cardName} />
                 </Grid>
                 <Grid item xs={12}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} md={6}>
-                            <CardList removeFromList={removeFromList} listType="haves" modifyList={modifyList} editable={false} setCardName={setCardName} title="Haves" list={cardData.haves} />
+                            <CardList removeFromList={removeFromList} listType="haves" modifyList={modifyList} editable={true} setCardName={setCardName} title="Haves" list={cardData.haves} />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                            <CardList removeFromList={removeFromList} listType="wants" modifyList={modifyList} editable={false} setCardName={setCardName} title="Wants" list={cardData.wants} />
+                            <CardList removeFromList={removeFromList} listType="wants" modifyList={modifyList} editable={true} setCardName={setCardName} title="Wants" list={cardData.wants} />
                         </Grid>
                     </Grid>
                 </Grid>

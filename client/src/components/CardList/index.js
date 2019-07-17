@@ -41,20 +41,20 @@ const CardList = (props) => {
                             ? props.list.map((elem, i) => {
                                 return (
                                     <TableRow selected={rowState.rowId === i} onClick={() => rowClick(i)} key={i}>
-                                        {(props.editable) ? <TableCell>
-                                            <IconButton onClick={props.removeFromList(i, props.listType)} size="small" start="edge" color="primary" aria-label={"Remove from " + props.listType}>
+                                        {(props.editable) ? <TableCell padding="none">
+                                            <IconButton onClick={() => {props.removeFromList(i, props.listType) }} size="small" start="edge" color="primary" aria-label={"Remove from " + props.listType}>
                                                 <Clear />
                                             </IconButton>
                                         </TableCell> : <></>}
-                                        <TableCell>{elem.set}</TableCell>
-                                        <TableCell>{elem.name}</TableCell>
-                                        <TableCell>
+                                        <TableCell padding="none">{elem.set}</TableCell>
+                                        <TableCell padding="none">{elem.name}</TableCell>
+                                        <TableCell padding="none">
                                             <Box display="flex" flexDirection="row">
-                                                {(props.editable) ? <IconButton onClick={props.modifyList(i, elem.quantity + 1, props.listType)} size="small" start="edge" color="primary" aria-label="Decrement Quantity">
+                                                {(props.editable) ? <IconButton onClick={()=> { props.modifyList(i, (elem.quantity - 1 > 1) ? elem.quantity - 1 : 1, props.listType) }} size="small" start="edge" color="primary" aria-label="Decrement Quantity">
                                                     <Remove />
                                                 </IconButton> : <></>}
                                                 {elem.quantity}
-                                                {(props.editable) ? <IconButton onClick={props.modifyList(i, ((elem.quantity - 1 > 1)) ? elem.quantity - 1 : 1, props.listType)} size="small" start="edge" color="primary" aria-label="Increment Quantity">
+                                                {(props.editable) ? <IconButton onClick={() => { props.modifyList(i, elem.quantity + 1, props.listType) }} size="small" start="edge" color="primary" aria-label="Increment Quantity">
                                                     <Add />
                                                 </IconButton> : <></>}
                                             </Box>
