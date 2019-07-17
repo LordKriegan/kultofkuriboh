@@ -107,3 +107,34 @@ PUT /api/trade/recievedStatus
         id: trade id
     }
     marks a users half of the trade as recieved or not. if yes, the other user's rating is increased by 25 and the user's have and want lists are updated. otherwise other users rating is decremented by 50.
+
+GET /api/chats/:id
+    retrieves all chats for a given user id
+
+
+
+CHAT API:
+
+    Socket.IO events:
+        Emitted from front end:
+        connectUser: pass in the userId to add the users socket to the server
+        newMessage: pass in an object as follows: {
+            to: <target User Id>,
+            from: <sender User Id>,
+            userInfo: {
+                picture: <sender picture>,
+                name: <sender name>
+            },
+            message: <message to send>
+        }
+                    Note: The reason for sending userInfo along with userId is so that the server does not have to query the database for every message sent.
+        
+        Listen for these events:
+        error: Something went wrong. Will return the error object.
+        newMessage: a new message recieved from another user. will be in the format: {
+            userInfo: {
+                picture: <link to user picture>,
+                name: <user's name>
+            },
+            message: <recieved message>
+        }
