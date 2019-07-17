@@ -84,8 +84,8 @@ const AppDrawer = () => {
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
-                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="Menu">
-                            <HomeIcon onClick={toggleDrawer('left', true)}/>
+                        <IconButton  onClick={toggleDrawer('left', true)} edge="start" className={classes.menuButton} color="inherit" aria-label="Menu">
+                            <HomeIcon />
                         </IconButton>
                         <Typography align="center" variant="h3" className={classes.root}>
                             YGO TRADE HUB
