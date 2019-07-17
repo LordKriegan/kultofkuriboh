@@ -51,12 +51,22 @@ class User {
     localStorage.setItem("user", JSON.stringify(user))
   }
 
+  async updateUser(userChanges) {
+    const currentUser = this.getUser()
+    const { data: token } = await axios.put("/api/user/update", { ...currentUser, ...userChanges })
+    const user = this.verifyToken(token)
+    if (user) {
+      this.setTokenInfo({ token, user })
+    }
+    return user
+  }
+
   /**
    * A method for verifying a signed jwt
    * @param {*} token the jwt token
    */
   verifyToken(token) {
-    return jwt.verify(this.getToken() || token, process.env.REACT_APP_JWT_SECRET)
+    return jwt.verify(token, process.env.REACT_APP_JWT_SECRET)
   }
 }
 

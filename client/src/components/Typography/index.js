@@ -5,7 +5,7 @@ import styles from "./styles"
 export default ({ text, type }) => {
   const classes = styles()
   return (
-    <div className={classes.root}>
+    <div className={`${classes.root} ${classes[type]}`}>
       <Typography variant={type} gutterBottom>
         {text}
       </Typography>
