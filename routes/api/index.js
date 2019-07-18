@@ -3,4 +3,5 @@ const router = require('express').Router();
 router.use("/user", require('./users.js'));
 router.use("/trade", require('./trades.js'));
 router.use("/chats", require('./chats.js'));
+router.use("/auth", require('./auth.js'));
 module.exports = router;

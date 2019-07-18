@@ -15,7 +15,7 @@ when both parties mark a trade as completed, pending cards are moved into their 
 
 API routes:
 
-POST /api/user/new
+POST /api/auth/new
     body: {
         name,
         email,
@@ -26,7 +26,8 @@ POST /api/user/new
     }
     * fields are optional. Picture should be a link to a profile picture (maybe use filestack api to handle upload/hosting) and biography should be a 500 character max description of the user.
     Will return a JSON web token as response
-POST /api/user/login
+
+POST /api/auth/login
     body: {
         email,
         password
@@ -50,22 +51,27 @@ PUT /api/user/update
         address*
     }
     * fields are optional.
-PUT /api/user/haves
-PUT /api/user/wants 
+
+PUT /api/user/collection
     body: {
-        id,
-        haves
-    }
-    haves should be an array of objects in the following format: 
-    [{
-        name: String,
-        set: String,
-        quantity: Number
-    }, ...]
+            id,
+            haves,
+            wants
+        }
+        haves and wants should be an array of objects in the following format: 
+        [{
+            name: String,
+            set: String,
+            quantity: Number
+        }, ...]
+
 
 GET /api/user/findHaves?name=CARDNAME&set=CARDSET
-GET /api/user/findWants?name=CARDNAME&set=CARDSET
     will return an array of users who have the given card in their haves/wants list
+
+GET /api/user/findWants?name=CARDNAME&set=CARDSET
+    see /api/user/findHaves
+
 POST /api/trade/addNew
     body: {
         sender: {
