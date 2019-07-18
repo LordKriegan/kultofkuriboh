@@ -15,6 +15,9 @@ when both parties mark a trade as completed, pending cards are moved into their 
 
 API routes:
 
+ALL routes except /api/auth/new and /api/auth/login are protected. Add a '"Authorization": "Bearer " + JSONWEBTOKEN' header to your request. 
+
+
 POST /api/auth/new
     body: {
         name,
