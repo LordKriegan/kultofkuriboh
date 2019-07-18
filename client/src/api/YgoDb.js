@@ -6,11 +6,11 @@ class YgoDb {
    * returns a promise
    */
   cardSets(cardName) {
-    return axios.get("/api/ygoprices/cards/" + cardName);    
+    return axios.get("/api/ygoprices/cards/" + encodeURIComponent(cardName));    
   }
 
   cardInfo(cardName) {
-      return axios.get("/api/ygoprices/cardInfo/" + cardName);
+      return axios.get("/api/ygoprices/cardInfo/" + encodeURIComponent(cardName));
   }
 }
 

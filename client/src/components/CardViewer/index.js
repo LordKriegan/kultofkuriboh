@@ -45,7 +45,7 @@ const CardViewer = (props) => {
                                 : ""}
                         </Grid>
                         <Grid item xs={3}>
-                            <CardMedia component="img" src={"http://yugiohprices.com/api/card_image/" + props.cardName} />
+                            <CardMedia component="img" src={"http://yugiohprices.com/api/card_image/" + encodeURIComponent(props.cardName)} />
                         </Grid>
                         <Grid item xs={12}>
                             {(card.info) ? <p>Text: {card.info.text}</p> : ""}

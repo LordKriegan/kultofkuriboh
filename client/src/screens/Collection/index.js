@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { CardSearcher, CardViewer, CardList } from '../../components/';
 import { User } from '../../api';
-
+import IconButton from '@material-ui/core/IconButton';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Save from '@material-ui/icons/Save';
 const Collection = () => {
     const [cardData, setCardData] = useState({
         cardName: "",
@@ -26,7 +30,7 @@ const Collection = () => {
     }, []);
 
     useEffect(() => {
-        console.log(cardData);
+        console.log("on change", cardData);
     }, [cardData]);
 
     const setCardName = (cardName) => {
@@ -34,7 +38,6 @@ const Collection = () => {
     }
 
     const saveCollection = () => {
-        
         User.updateCollection(User.getUser().id, cardData.haves, cardData.wants)
             .then((resp) => {
                 console.log(resp);
@@ -45,7 +48,6 @@ const Collection = () => {
     }
 
     const addToList = (set, name, qty, list) => {
-        console.log(set, name, qty, list)
         if (!set || !name || !qty || !list) {
             console.log("cant add to list " + list)
             return
@@ -75,28 +77,42 @@ const Collection = () => {
         setCardData({ ...cardData, [list]: newList })
     }
     const removeFromList = (index, list) => {
+        console.log(list)
+        console.log("original", cardData[list])
         let newList = [...cardData[list]];
-        newList.splice(index, 1);
-        setCardData({ ...cardData, [list]: newList});
+        console.log("cloned", newList);
+        console.log("spliced return", newList.splice(index, 1));
+        console.log("spliced list", newList);
+        setCardData({ ...cardData, [list]: newList });
     }
     return (
         <Grid container spacing={2}>
             <Grid item xs={12} md={5}>
-                <CardSearcher saveCollection={saveCollection} changeCard={setCardName} addToList={addToList} />
+                <CardSearcher changeCard={setCardName} addToList={addToList} />
             </Grid>
             <Grid item xs={12} md={7}>
                 <Grid item xs={12}>
                     <CardViewer cardName={cardData.cardName} />
                 </Grid>
                 <Grid item xs={12}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} md={6}>
-                            <CardList removeFromList={removeFromList} listType="haves" modifyList={modifyList} editable={true} setCardName={setCardName} title="Haves" list={cardData.haves} />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <CardList removeFromList={removeFromList} listType="wants" modifyList={modifyList} editable={true} setCardName={setCardName} title="Wants" list={cardData.wants} />
-                        </Grid>
-                    </Grid>
+                    <Card>
+                        <CardContent>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} md={6}>
+                                    <CardList removeFromList={removeFromList} listType="haves" modifyList={modifyList} editable={true} setCardName={setCardName} title="Haves" list={cardData.haves} />
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                    <CardList removeFromList={removeFromList} listType="wants" modifyList={modifyList} editable={true} setCardName={setCardName} title="Wants" list={cardData.wants} />
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                        <CardActions>
+                        <IconButton onClick={saveCollection} start="edge" color="primary" aria-label="Save Collection">
+                                <Save />
+                            </IconButton>
+                        </CardActions>
+                    </Card>
+
                 </Grid>
             </Grid>
         </Grid>

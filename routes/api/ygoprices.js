@@ -2,7 +2,7 @@ const router = require('express').Router();
 const axios = require('axios');
 router.get("/cards/:cardName", (req, res) => {
     axios
-    .get("http://yugiohprices.com/api/get_card_prices/" + req.params.cardName)
+    .get("http://yugiohprices.com/api/get_card_prices/" + encodeURIComponent(req.params.cardName))
     .then(response => {
         res.json(response.data.data);
     })
@@ -14,7 +14,7 @@ router.get("/cards/:cardName", (req, res) => {
 
 router.get("/cardInfo/:cardName", (req, res) => {
     axios
-    .get("http://yugiohprices.com/api/card_data/" + req.params.cardName)
+    .get("http://yugiohprices.com/api/card_data/" + encodeURIComponent(req.params.cardName))
     .then(response => {
         res.json(response.data.data);
     })

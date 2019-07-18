@@ -19,7 +19,7 @@ import Box from '@material-ui/core/Box'
 import Search from '@material-ui/icons/Search';
 import Add from '@material-ui/icons/Add'
 import Remove from '@material-ui/icons/Remove';
-import Save from '@material-ui/icons/Save';
+
 //api
 import { YgoDb } from '../../api'
 
@@ -48,7 +48,12 @@ const CardSearcher = (props) => {
         YgoDb.cardSets(cards.cardName)
             .then((resp) => {
                 if (resp.data.length) {
-                    setCards({ ...cards, cardList: resp.data });
+                    let newObj = { ...cards, cardList: resp.data };
+                    if (resp.data.length === 1) { 
+                        newObj.selectedCard = 0;
+                        newObj.set = resp.data[0].print_tag
+                    } 
+                    setCards(newObj);
                     props.changeCard(cards.cardName)
                 }
             })
@@ -119,9 +124,6 @@ const CardSearcher = (props) => {
                                 <Add />
                             </IconButton>
                             <Button onClick={() => props.addToList(cards.set, cards.cardName, cards.quantity, "wants")} variant="contained" color="primary">Wants</Button>
-                            <IconButton onClick={props.saveCollection} start="edge" color="primary" aria-label="Save Collection">
-                                <Save />
-                            </IconButton>
                         </CardActions>
                         : ""}
                 </Card>
