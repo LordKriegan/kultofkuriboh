@@ -41,14 +41,12 @@ const CardViewer = (props) => {
                                     {(card.info.level) ? <p>Level/Rank/Link Rating: {card.info.level}</p> : ""}
                                     {(card.info.atk) ? <p>ATK: {card.info.atk}</p> : ""}
                                     {(card.info.def) ? <p>DEF: {card.info.def}</p> : ""}
+                                    {(card.info) ? <p>Text: {card.info.text}</p> : ""}
                                 </>
                                 : ""}
                         </Grid>
                         <Grid item xs={3}>
                             <CardMedia component="img" src={"http://yugiohprices.com/api/card_image/" + encodeURIComponent(props.cardName)} />
-                        </Grid>
-                        <Grid item xs={12}>
-                            {(card.info) ? <p>Text: {card.info.text}</p> : ""}
                         </Grid>
                     </Grid>
                 </CardContent>

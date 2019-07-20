@@ -18,10 +18,13 @@ const CardList = (props) => {
         rowId: ''
     });
     const rowClick = (id) => {
+       if( props.list[id] ) {
         props.setCardName(props.list[id].name);
         setRowState({
             ...rowState, rowId: id
-        });
+        }) 
+       } 
+      
     }
     return (
         <Card>

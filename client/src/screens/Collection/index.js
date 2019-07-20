@@ -77,13 +77,11 @@ const Collection = () => {
         setCardData({ ...cardData, [list]: newList })
     }
     const removeFromList = (index, list) => {
-        console.log(list)
-        console.log("original", cardData[list])
-        let newList = [...cardData[list]];
-        console.log("cloned", newList);
-        newList.splice(index, 1);
-        console.log("spliced list", newList);
-        setCardData({ ...cardData, [list]: newList });
+        setCardData(prevState=> {
+            let newList = prevState[list];
+            newList.splice(index, 1);
+            return { ...prevState, [list]: newList }
+        });
     }
     return (
         <Grid container spacing={2}>
