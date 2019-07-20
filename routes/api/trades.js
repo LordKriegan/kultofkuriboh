@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Trade, UserTrade, User } = require('../../models');
+const { Trade, User } = require('../../models');
 const aes256 = require('aes256');
 router.post('/addNew', (req, res) => {
     /*

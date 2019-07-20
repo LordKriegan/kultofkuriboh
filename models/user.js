@@ -1,6 +1,6 @@
 const { model, Schema } = require('mongoose');
 const Card = require('./card.js');
-module.exports = model("User", new Schema({
+const User = new Schema({
     salt: { type: String, required: true },
     hash: { type: String, required: true },
     name: { type: String, required: true },
@@ -10,7 +10,7 @@ module.exports = model("User", new Schema({
         validate: {
             isAsync: true,
             validator: (v, cb) => {
-                model('User').countDocuments({ email: v }, function (err, count) {
+                model('User').countDocuments({ email: v }, (err, count) => {
                     if (err) {
                         throw err;
                     }
@@ -27,6 +27,13 @@ module.exports = model("User", new Schema({
     pending: { type: [Card] },
     haves: { type: [Card] },
     wants: { type: [Card] },
-    chats: { type: [String] },
+    chats: { type: [String], ref: "Chat" },
     trades: { type: [String] }
-}));
+})
+// User.virtual('userChats', {
+//     ref: "Chat",
+//     localField: "chats",
+//     foreignField: "roomId",
+//     justOne: false
+// })
+module.exports = model("User", User);

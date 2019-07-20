@@ -4,9 +4,8 @@ export default makeStyles(theme =>
   createStyles({
     textField: {
       display: "block",
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 200,
+      margin: "1em",
+      width: "auto",
     },
   }),
 )
