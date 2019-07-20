@@ -81,7 +81,7 @@ const Collection = () => {
         console.log("original", cardData[list])
         let newList = [...cardData[list]];
         console.log("cloned", newList);
-        console.log("spliced return", newList.splice(index, 1));
+        newList.splice(index, 1);
         console.log("spliced list", newList);
         setCardData({ ...cardData, [list]: newList });
     }
