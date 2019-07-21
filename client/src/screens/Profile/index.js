@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
+import queryStr from 'query-string';
+import { User } from '../../api/';
 import styles from "./styles.js";
 const Profile = (props) => {
     useEffect(() => {
-        if (props.location.query.id) {
-            alert("YAAAASH!");
-        } else {
-            alert ("NUUUUUU")
-        }
+        let query = queryStr.parse(props.location.search);
+        let uId = (query.id) ? query.id : User.getUser().id;
+        User.findOne(uId)
+            .then(({data}) => {
+                console.log(data);
+            })
+            .catch(err => console.error(err));
     },[])
     const classes = styles();
     return (

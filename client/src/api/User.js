@@ -51,6 +51,11 @@ class User {
     localStorage.setItem("user", JSON.stringify(user))
   }
 
+   /**
+   * A method for updating the user's profile
+   * @param {*} userChanges changes user made to their profile
+   */
+
   async updateUser(userChanges) {
     const currentUser = this.getUser()
     const { data: token } = await axios.put("/api/user/update", { ...currentUser, ...userChanges })
@@ -60,6 +65,14 @@ class User {
     }
     return user
   }
+ /**
+   * A method for finding user data for a given user id
+   * @param {*} id user id to look for
+   */
+
+   findOne(userId) {
+     return axios.get("/api/user/findOne/" + userId)
+   }
 
   /**
    * A method for verifying a signed jwt
