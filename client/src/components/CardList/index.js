@@ -19,7 +19,7 @@ const CardList = (props) => {
     });
     const rowClick = (id) => {
        if( props.list[id] ) {
-        props.setCardName(props.list[id].name);
+        if (props.setCardName) props.setCardName(props.list[id].name);
         setRowState({
             ...rowState, rowId: id
         }) 
