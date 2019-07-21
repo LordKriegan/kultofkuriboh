@@ -1,6 +1,7 @@
 import React from "react"
 import { Redirect, Router, Route, Switch } from "react-router-dom"
 import { createBrowserHistory } from "history"
+import AppDrawer from '../components/AppDrawer'
 import { User } from "../api"
 import * as screens from "../screens"
 
@@ -25,6 +26,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 export default () => {
   return (
     <Router history={createBrowserHistory()}>
+      <AppDrawer />
       <Switch>
         <PublicRoute path="/" component={screens.Auth} exact />
         <PrivateRoute path="/home" component={screens.Home} exact />
