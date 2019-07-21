@@ -50,13 +50,13 @@ PUT /api/user/update
         address*
     }
     * fields are optional.
-PUT /api/user/haves
-PUT /api/user/wants 
+PUT /api/user/collection 
     body: {
         id,
-        haves
+        haves,
+        wants
     }
-    haves should be an array of objects in the following format: 
+    haves and wants should be an array of objects in the following format: 
     [{
         name: String,
         set: String,
