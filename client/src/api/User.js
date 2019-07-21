@@ -59,8 +59,29 @@ class User {
       this.setTokenInfo({ token, user })
     }
     return user
+  }  
+  /**
+  * A method for verifying a signed jwt
+  * @param id User Id
+  * @param haves Array of cards user wants in format { set: SET_NAME, name: CARD_NAME, quantity: QUANTITY }
+  * @param wants Array of cards user wants in format { set: SET_NAME, name: CARD_NAME, quantity: QUANTITY }
+  */
+  updateCollection(id, haves, wants) {
+    return axios.put('/api/user/collection', {
+      id,
+      haves,
+      wants
+    });
   }
 
+  /**
+   * 
+   * @param id User id 
+   */
+
+   getUserData(id) {
+     return axios.get("/api/user/findOne/" + id)
+   }
   /**
    * A method for verifying a signed jwt
    * @param {*} token the jwt token
