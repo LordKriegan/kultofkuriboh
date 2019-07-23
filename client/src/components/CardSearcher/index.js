@@ -38,6 +38,7 @@ const CardSearcher = (props) => {
             selectedCard: id,
             set
         })
+        if (props.changeSet) props.changeSet(set)
     }
 
     const updateInput = ({ target: { id, value } }) => {
@@ -49,10 +50,13 @@ const CardSearcher = (props) => {
             .then((resp) => {
                 if (resp.data.length) {
                     let newObj = { ...cards, cardList: resp.data };
-                    if (resp.data.length === 1) { 
+                    if (resp.data.length === 1) {
                         newObj.selectedCard = 0;
                         newObj.set = resp.data[0].print_tag
-                    } 
+                        if (props.changeSet) {
+                            props.changeSet(resp.data[0].print_tag)
+                        }
+                    }
                     setCards(newObj);
                     props.changeCard(cards.cardName)
                 }
@@ -113,18 +117,22 @@ const CardSearcher = (props) => {
                             : "Search for a card!"}
                     </CardContent>
                     {(cards.cardList)
-                        ? <CardActions>
-                           
-                            <Button onClick={() => props.addToList(cards.set, cards.cardName, cards.quantity, "haves")} variant="contained" color="primary">Haves</Button>
-                            <IconButton onClick={() => setCards({ ...cards, quantity: (cards.quantity > 1) ? cards.quantity - 1 : 1 })} start="edge" color="primary" aria-label="Decrement Quantity">
-                                <Remove />
-                            </IconButton>
-                            <span>{cards.quantity}</span>
-                            <IconButton onClick={() => setCards({ ...cards, quantity: cards.quantity + 1 })} start="edge" color="primary" aria-label="Increment Quantity">
-                                <Add />
-                            </IconButton>
-                            <Button onClick={() => props.addToList(cards.set, cards.cardName, cards.quantity, "wants")} variant="contained" color="primary">Wants</Button>
-                        </CardActions>
+                        ? (props.searchType === "cards")
+                            ? <CardActions>
+                                <Button onClick={() => props.addToList(cards.set, cards.cardName, cards.quantity, "haves")} variant="contained" color="primary">Haves</Button>
+                                <IconButton onClick={() => setCards({ ...cards, quantity: (cards.quantity > 1) ? cards.quantity - 1 : 1 })} start="edge" color="primary" aria-label="Decrement Quantity">
+                                    <Remove />
+                                </IconButton>
+                                <span>{cards.quantity}</span>
+                                <IconButton onClick={() => setCards({ ...cards, quantity: cards.quantity + 1 })} start="edge" color="primary" aria-label="Increment Quantity">
+                                    <Add />
+                                </IconButton>
+                                <Button onClick={() => props.addToList(cards.set, cards.cardName, cards.quantity, "wants")} variant="contained" color="primary">Wants</Button>
+                            </CardActions>
+                            : <CardActions>
+                                <Button onClick={props.searchHaves} variant="contained" color="primary">Haves</Button>
+                                <Button onClick={props.searchWants} variant="contained" color="primary">Wants</Button>
+                            </CardActions>
                         : ""}
                 </Card>
             </Grid>
