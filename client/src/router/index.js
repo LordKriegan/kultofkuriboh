@@ -33,6 +33,7 @@ export default () => {
         <PrivateRoute path="/profile" component={screens.Profile} exact />
         <PrivateRoute path="/trade" component={screens.Trade} exact />
         <PrivateRoute path="/collection" component={screens.Collection} exact />
+        <PrivateRoute path="/chats" component={screens.Chats} exact />
         <Route component={screens.NotFound} />
       </Switch>
     </Router>

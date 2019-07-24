@@ -59,7 +59,7 @@ class User {
       this.setTokenInfo({ token, user })
     }
     return user
-  }  
+  }
   /**
   * A method for verifying a signed jwt
   * @param id User Id
@@ -73,15 +73,20 @@ class User {
       wants
     });
   }
-
+  /**
+   * A method for getting all chats from the local user
+   */
+  getChats() {
+    return axios.get('/api/chats/' + this.getUser().id);
+  }
   /**
    * 
    * @param id User id 
    */
 
-   getUserData(id) {
-     return axios.get("/api/user/findOne/" + id)
-   }
+  getUserData(id) {
+    return axios.get("/api/user/findOne/" + id)
+  }
   /**
    * A method for verifying a signed jwt
    * @param {*} token the jwt token
