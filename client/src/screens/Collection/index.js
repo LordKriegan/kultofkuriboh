@@ -17,7 +17,6 @@ const Collection = () => {
     useEffect(() => {
         User.getUserData(User.getUser().id)
             .then((resp) => {
-                console.log(resp.data);
                 setCardData({
                     ...cardData,
                     haves: [...resp.data.haves],
@@ -28,10 +27,6 @@ const Collection = () => {
                 console.error(err);
             });
     }, []);
-
-    useEffect(() => {
-        console.log("on change", cardData);
-    }, [cardData]);
 
     const setCardName = (cardName) => {
         setCardData({ ...cardData, cardName: cardName });
@@ -86,7 +81,7 @@ const Collection = () => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12} md={5}>
-                <CardSearcher changeCard={setCardName} addToList={addToList} />
+                <CardSearcher searchType="cards" changeCard={setCardName} addToList={addToList} />
             </Grid>
             <Grid item xs={12} md={7}>
                 <Grid item xs={12}>

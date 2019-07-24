@@ -3,6 +3,7 @@ const { User } = require("../../models")
 const crypto = require("crypto")
 const jwt = require("jsonwebtoken")
 const aes256 = require("aes256")
+const _ = require('lodash');
 const getHash = (password, salt) => {
   return crypto.pbkdf2Sync(password, salt, 1000, 64, "sha512").toString("hex")
 }
@@ -117,10 +118,10 @@ router.get("/findHaves", (req, res) => {
   User.find(
     {
       "haves.name": {
-        $regex: new RegExp("^" + req.query.name.toLowerCase(), "i"),
+        $regex: new RegExp("^" + _.escapeRegExp(req.query.name.toLowerCase()), "i"),
       },
       "haves.set": {
-        $regex: new RegExp("^" + req.query.set.toLowerCase(), "i"),
+        $regex: new RegExp("^" + _.escapeRegExp(req.query.set.toLowerCase()), "i"),
       },
     },
     { salt: 0, hash: 0, address: 0, trades: 0, chats: 0 },
@@ -138,10 +139,10 @@ router.get("/findWants", (req, res) => {
   User.find(
     {
       "wants.name": {
-        $regex: new RegExp("^" + req.query.name.toLowerCase(), "i"),
+        $regex: new RegExp("^" + _.escapeRegExp(req.query.name.toLowerCase()), "i"),
       },
       "wants.set": {
-        $regex: new RegExp("^" + req.query.set.toLowerCase(), "i"),
+        $regex: new RegExp("^" + _.escapeRegExp(req.query.set.toLowerCase()), "i"),
       },
     },
     { salt: 0, hash: 0, address: 0, trades: 0, chats: 0 },
