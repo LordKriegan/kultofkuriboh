@@ -35,11 +35,11 @@ export default function Auth({ history }) {
 
   const handleLogin = () =>
     User.login({ email: loginEmail, password: loginPassword })
-      .then(() => history.push("/home"))
+      .then(() => history.push("/collection"))
       .catch(e => alert(e))
   const handleRegister = () =>
     User.register({ address, email, name, password })
-      .then(() => history.push("/home"))
+      .then(() => history.push("/collection"))
       .catch(e => alert(e))
   const handleToggle = () => toggleRegister(!register)
 

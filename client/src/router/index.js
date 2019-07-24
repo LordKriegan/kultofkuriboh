@@ -18,7 +18,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     component={props =>
-      User.getToken() ? <Component {...props} user={User.getUser()} /> : <Redirect to="/" />
+      User.getToken() ? <Component {...props} user={User.getUser()} /> : <Redirect to="/collection" />
     }
   />
 )
