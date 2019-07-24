@@ -44,17 +44,11 @@ router.put("/update", (req, res) => {
   })
 })
 
-router.put("/haves", (req, res) => {
-  User.findByIdAndUpdate(req.body.id, { haves: req.body.cards }, (err, resp) => {
-    if (err) {
-      res.status(500).json({ error: err })
-    }
-    res.json("User Updated!")
-  })
-})
-
-router.put("/wants", (req, res) => {
-  User.findByIdAndUpdate(req.body.id, { wants: req.body.cards }, (err, resp) => {
+router.put("/collection", (req, res) => {
+  let userObj = {};
+  if (req.body.haves.length) userObj.haves = req.body.haves;
+  if (req.body.wants.length) userObj.wants = req.body.wants;
+  User.findByIdAndUpdate(req.body.id, userObj, (err, resp) => {
     if (err) {
       res.status(500).json({ error: err })
     }
@@ -66,10 +60,10 @@ router.get("/findHaves", (req, res) => {
   User.find(
     {
       "haves.name": {
-        $regex: new RegExp("^" + req.query.name.toLowerCase(), "i"),
+        $regex: new RegExp("^" + _.escapeRegExp(req.query.name.toLowerCase()), "i"),
       },
       "haves.set": {
-        $regex: new RegExp("^" + req.query.set.toLowerCase(), "i"),
+        $regex: new RegExp("^" + _.escapeRegExp(req.query.set.toLowerCase()), "i"),
       },
     },
     { salt: 0, hash: 0, address: 0, trades: 0, chats: 0 },
@@ -87,10 +81,10 @@ router.get("/findWants", (req, res) => {
   User.find(
     {
       "wants.name": {
-        $regex: new RegExp("^" + req.query.name.toLowerCase(), "i"),
+        $regex: new RegExp("^" + _.escapeRegExp(req.query.name.toLowerCase()), "i"),
       },
       "wants.set": {
-        $regex: new RegExp("^" + req.query.set.toLowerCase(), "i"),
+        $regex: new RegExp("^" + _.escapeRegExp(req.query.set.toLowerCase()), "i"),
       },
     },
     { salt: 0, hash: 0, address: 0, trades: 0, chats: 0 },

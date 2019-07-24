@@ -51,6 +51,11 @@ class User {
     localStorage.setItem("user", JSON.stringify(user))
   }
 
+   /**
+   * A method for updating the user's profile
+   * @param {*} userChanges changes user made to their profile
+   */
+
   async updateUser(userChanges) {
     const currentUser = this.getUser()
     const { data: token } = await axios.put("/api/user/update", { ...currentUser, ...userChanges }, {
@@ -64,7 +69,36 @@ class User {
     }
     return user
   }
+  /**
+  * A method for verifying a signed jwt
+  * @param id User Id
+  * @param haves Array of cards user wants in format { set: SET_NAME, name: CARD_NAME, quantity: QUANTITY }
+  * @param wants Array of cards user wants in format { set: SET_NAME, name: CARD_NAME, quantity: QUANTITY }
+  */
+  updateCollection(id, haves, wants) {
+    return axios.put('/api/user/collection', {
+      id,
+      haves,
+      wants
+    });
+  }
+ /**
+   * A method for finding user data for a given user id
+   * @param {*} id user id to look for
+   */
 
+   findOne(userId) {
+     return axios.get("/api/user/findOne/" + userId)
+   }
+
+  /**
+   * 
+   * @param id User id 
+   */
+
+  getUserData(id) {
+    return axios.get("/api/user/findOne/" + id)
+  }
   /**
    * A method for verifying a signed jwt
    * @param {*} token the jwt token
@@ -72,6 +106,23 @@ class User {
   verifyToken(token) {
     return jwt.verify(token, process.env.REACT_APP_JWT_SECRET)
   }
+  /**
+ * A method for finding all users with a given card in their haves list
+ * @param {*} set set of the card to look for
+ * @param {*} card name of the card to look for
+ */
+  findHaves(set, card) {
+    return axios.get("/api/user/findHaves?set=" + encodeURIComponent(set) + "&name=" + encodeURIComponent(card))
+  }
+    /**
+ * A method for finding all users with a given card in their wants list
+ * @param {*} set set of the card to look for
+ * @param {*} card name of the card to look for
+ */
+findWants(set, card) {
+  return axios.get("/api/user/findWants?set=" + encodeURIComponent(set) + "&name=" + encodeURIComponent(card))
+}
+
 }
 
 export default new User()
