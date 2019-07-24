@@ -7,7 +7,7 @@ class User {
    * @param {*} loginInfo users email and password
    */
   async login(loginInfo) {
-    const { data: token } = await axios.post("/api/user/login", loginInfo)
+    const { data: token } = await axios.post("/api/auth/login", loginInfo)
     const user = this.verifyToken(token)
     if (user) {
       this.setTokenInfo({ token, user })
@@ -19,7 +19,7 @@ class User {
    * @param {*} registration registration info including address, name, email, password
    */
   async register(registration) {
-    const { data: token } = await axios.post("/api/user/new", registration)
+    const { data: token } = await axios.post("/api/auth/new", registration)
     const user = this.verifyToken(token)
     if (user) {
       this.setTokenInfo({ token, user })
@@ -58,7 +58,11 @@ class User {
 
   async updateUser(userChanges) {
     const currentUser = this.getUser()
-    const { data: token } = await axios.put("/api/user/update", { ...currentUser, ...userChanges })
+    const { data: token } = await axios.put("/api/user/update", { ...currentUser, ...userChanges }, {
+      headers: {
+        "Authorization": "Bearer " + this.getToken()
+      }
+    })
     const user = this.verifyToken(token)
     if (user) {
       this.setTokenInfo({ token, user })
