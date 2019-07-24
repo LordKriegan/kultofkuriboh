@@ -2,6 +2,7 @@ const router = require("express").Router()
 const { User } = require("../../models")
 const aes256 = require("aes256")
 const { getHash, getSalt, generateJWT } = require('../../helpers')
+const _ = require('lodash');
 
 router.delete("/remove/:id", (req, res) => {
   User.findByIdAndDelete(req.params.id, (err, resp) => {

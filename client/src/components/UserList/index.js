@@ -31,13 +31,13 @@ const UserList = (props) => {
                     <TableBody>
                         {(props.list.length)
                             ? <>
-                                {props.list.filter(elem=>elem._id !== myId).map((elem, i) => {
+                                {props.list.filter(elem => elem._id !== myId).map((elem, i) => {
                                     return (<TableRow key={i}>
                                         <TableCell><Avatar size="small" component="span" style={{ height: "25px", width: "25px" }} src={elem.picture} /></TableCell>
                                         <TableCell><Link to={"/profile?id=" + elem._id}>{elem.name}</Link></TableCell>
                                         <TableCell>{elem.rating}</TableCell>
                                         <TableCell className={classes.userActions}>
-                                            <Button>Trade</Button>
+                                            <Link to={"/trade?id=" + elem._id}><Button>Trade</Button></Link>
                                             <Button>Chat</Button>
                                         </TableCell>
                                     </TableRow>);
