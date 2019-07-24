@@ -80,6 +80,10 @@ class User {
       id,
       haves,
       wants
+    }, {
+      headers: {
+        "Authorization": "Bearer " + this.getToken()
+      }
     });
   }
  /**
@@ -88,7 +92,11 @@ class User {
    */
 
    findOne(userId) {
-     return axios.get("/api/user/findOne/" + userId)
+     return axios.get("/api/user/findOne/" + userId, {
+      headers: {
+        "Authorization": "Bearer " + this.getToken()
+      }
+    })
    }
 
   /**
@@ -97,7 +105,11 @@ class User {
    */
 
   getUserData(id) {
-    return axios.get("/api/user/findOne/" + id)
+    return axios.get("/api/user/findOne/" + id, {
+      headers: {
+        "Authorization": "Bearer " + this.getToken()
+      }
+    })
   }
   /**
    * A method for verifying a signed jwt
@@ -112,7 +124,11 @@ class User {
  * @param {*} card name of the card to look for
  */
   findHaves(set, card) {
-    return axios.get("/api/user/findHaves?set=" + encodeURIComponent(set) + "&name=" + encodeURIComponent(card))
+    return axios.get("/api/user/findHaves?set=" + encodeURIComponent(set) + "&name=" + encodeURIComponent(card), {
+      headers: {
+        "Authorization": "Bearer " + this.getToken()
+      }
+    })
   }
     /**
  * A method for finding all users with a given card in their wants list
@@ -120,7 +136,11 @@ class User {
  * @param {*} card name of the card to look for
  */
 findWants(set, card) {
-  return axios.get("/api/user/findWants?set=" + encodeURIComponent(set) + "&name=" + encodeURIComponent(card))
+  return axios.get("/api/user/findWants?set=" + encodeURIComponent(set) + "&name=" + encodeURIComponent(card), {
+    headers: {
+      "Authorization": "Bearer " + this.getToken()
+    }
+  })
 }
 
 }

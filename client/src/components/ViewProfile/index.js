@@ -8,6 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import styles from './styles';
 import Typography from '@material-ui/core/Typography';
 import { User } from '../../api/';
+import { Link } from 'react-router-dom';
 //import edit button from materialui icons
 //import some kind of icons for trades/chats
 
@@ -16,7 +17,7 @@ const ViewProfile = (props) => {
     const classes = styles()
     return (
         <Card>
-            <CardHeader title={name} titleTypographyProps={{align: "center"}}/>
+            <CardHeader title={name} titleTypographyProps={{ align: "center" }} />
             <CardContent className={classes.profileBody}>
                 <Avatar className={classes.avatar} src={picture} />
                 <Typography>{email}</Typography>
@@ -24,9 +25,12 @@ const ViewProfile = (props) => {
                 <Typography>{biography}</Typography>
             </CardContent>
             <CardActions className={classes.profileActions}>
-                {(userId === User.getUser().id) 
+                {(userId === User.getUser().id)
                     ? <Button variant="contained" onClick={props.edit}>Edit</Button>
-                    : <><Button variant="contained">Trade</Button><Button variant="contained">Chat</Button></>}
+                    : <>
+                        <Link to={"/trade?id=" + userId}><Button variant="contained">Trade</Button></Link>
+                        <Button variant="contained">Chat</Button>
+                    </>}
             </CardActions>
         </Card>
     );
