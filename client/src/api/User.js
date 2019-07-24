@@ -64,7 +64,7 @@ class User {
       this.setTokenInfo({ token, user })
     }
     return user
-  }  
+  }
   /**
   * A method for verifying a signed jwt
   * @param id User Id
@@ -92,9 +92,9 @@ class User {
    * @param id User id 
    */
 
-   getUserData(id) {
-     return axios.get("/api/user/findOne/" + id)
-   }
+  getUserData(id) {
+    return axios.get("/api/user/findOne/" + id)
+  }
   /**
    * A method for verifying a signed jwt
    * @param {*} token the jwt token
@@ -102,6 +102,23 @@ class User {
   verifyToken(token) {
     return jwt.verify(token, process.env.REACT_APP_JWT_SECRET)
   }
+  /**
+ * A method for finding all users with a given card in their haves list
+ * @param {*} set set of the card to look for
+ * @param {*} card name of the card to look for
+ */
+  findHaves(set, card) {
+    return axios.get("/api/user/findHaves?set=" + encodeURIComponent(set) + "&name=" + encodeURIComponent(card))
+  }
+    /**
+ * A method for finding all users with a given card in their wants list
+ * @param {*} set set of the card to look for
+ * @param {*} card name of the card to look for
+ */
+findWants(set, card) {
+  return axios.get("/api/user/findWants?set=" + encodeURIComponent(set) + "&name=" + encodeURIComponent(card))
+}
+
 }
 
 export default new User()
