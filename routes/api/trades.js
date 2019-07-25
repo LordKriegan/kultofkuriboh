@@ -51,15 +51,29 @@ router.get("/findAll/:userId", (req, res) => {
         if (err) {
             res.status(500).json({ error: err });
         }
-        Trade.find({ _id: { $in: resp.trades } }).populate("sender.userId reciever.userId", "picture name address").exec((err, tradeResp) => {
+        Trade.find({ _id: { $in: resp.trades } }).populate("sender.userId reciever.userId", "picture name").exec((err, tradeResp) => {
             if (err) {
                 res.status(500).json({ error: err });
             }
+            let tradeData = {
+                active: [],
+                pending: [],
+                completed: []
+            }
             tradeResp.forEach((elem) => {
-                elem.sender.userId.address = aes256.decrypt(process.env.AES256_KEY, elem.sender.userId.address);
-                elem.reciever.userId.address = aes256.decrypt(process.env.AES256_KEY, elem.reciever.userId.address);
+                if (elem.accepted === "accept") {
+                    if (elem.sender.recieved === "pending" || elem.reciever.recieved === "pending") {
+                        tradeData.active.push(elem)
+                    } else {
+                        tradeData.completed.push(elem)
+                    }
+                } else if (elem.accepted === "pending") {
+                    tradeData.pending.push(elem)
+                } else if (elem.accepted === "reject") {
+                    tradeData.completed.push(elem)
+                }
             });
-            res.json(tradeResp);
+            res.json(tradeData);
         });
     });
 });

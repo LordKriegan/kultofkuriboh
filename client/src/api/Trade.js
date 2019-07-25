@@ -24,6 +24,16 @@ class Trade {
             }
           })
     }
+    /**
+     * @param {*} userId get all trades on a given user id
+     */
+    findAllTrades(userId) {
+        return axios.get("/api/trade/findAll/" + userId, {
+            headers: {
+                "Authorization": "Bearer " + User.getToken()
+            }
+        })
+    }
 }
 
 export default new Trade()

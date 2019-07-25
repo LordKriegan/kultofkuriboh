@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import {CardSearcher, CardViewer, UserList} from '../../components';
 import { User } from '../../api';
@@ -48,7 +48,7 @@ const SearchUsers = () => {
     return(
         <Grid container spacing={2}>
             <Grid item xs={12} md={5}>
-                <CardSearcher changeSet={setSet} searchType="users" changeCard={setCard} searchHaves={searchHaves} />
+                <CardSearcher changeSet={setSet} searchType="users" changeCard={setCard} searchHaves={searchHaves} searchWants={searchWants} />
             </Grid>
             <Grid item xs={12} md={7}>
                 <Grid container spacing={2}>
