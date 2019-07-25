@@ -51,7 +51,7 @@ router.get("/findAll/:userId", (req, res) => {
         if (err) {
             res.status(500).json({ error: err });
         }
-        Trade.find({ _id: { $in: resp.trades } }).populate("sender.userId reciever.userId", "picture name").exec((err, tradeResp) => {
+        Trade.find({ _id: { $in: resp.trades } }).populate("sender.userId reciever.userId", "picture name rating").exec((err, tradeResp) => {
             if (err) {
                 res.status(500).json({ error: err });
             }
@@ -79,7 +79,7 @@ router.get("/findAll/:userId", (req, res) => {
 });
 
 router.get("/findOne/:id", (req, res) => {
-    Trade.findById(req.params.id).populate("sender.userId reciever.userId", "picture name address").exec((err, resp) => {
+    Trade.findById(req.params.id).populate("sender.userId reciever.userId", "picture name address rating").exec((err, resp) => {
         if (err) {
             res.status(500).json({ error: err });
         }

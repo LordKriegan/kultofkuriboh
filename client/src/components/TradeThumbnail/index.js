@@ -7,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 
 const TradeThumbnail = (props) => {
-    console.log(props)
     const bool = props.reciever.userId._id === User.getUser().id;
     const myData = (bool) ? props.reciever : props.sender;
     const partnerData = (bool) ? props.sender : props.reciever;
