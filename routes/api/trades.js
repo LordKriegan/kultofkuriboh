@@ -207,6 +207,8 @@ router.put("/recievedStatus", (req, res) => {
                         res.json("Trade Updated!");
                     });
                 });
+            } else if (req.body.recieved === 'no') {
+                res.json("Trade Updated");
             }
 
         });

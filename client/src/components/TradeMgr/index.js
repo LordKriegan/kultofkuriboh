@@ -64,6 +64,7 @@ const TradeMgr = (props) => {
                     ? <Card>
                         <CardHeader title={tradeData.myData.userId.name} subheader={tradeData.myData.userId.rating} avatar={<Avatar src={tradeData.myData.userId.picture} />} />
                         <CardContent>
+                            <Typography align="center">Recieved: {tradeData.myData.recieved}</Typography>
                             <Table>
                                 <TableHead>
                                     <TableRow>
@@ -91,6 +92,7 @@ const TradeMgr = (props) => {
                     ? <Card>
                         <CardHeader title={tradeData.theirData.userId.name} subheader={tradeData.theirData.userId.rating} avatar={<Avatar src={tradeData.theirData.userId.picture} />} />
                         <CardContent>
+                        <Typography align="center">Recieved: {tradeData.theirData.recieved}</Typography>
                             <Table>
                                 <TableHead>
                                     <TableRow>
