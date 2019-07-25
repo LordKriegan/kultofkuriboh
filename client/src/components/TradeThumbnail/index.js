@@ -22,7 +22,7 @@ const TradeThumbnail = (props) => {
         <Grid container spacing={0}>
             <Grid item xs={12}>
                 <Card style={{border: "3px solid black"}} raised={true}>
-                    <CardHeader avatar={<Avatar src={partnerData.userId.picture} />} title={partnerData.userId.name} subheader={partnerData.userId.rating} />
+                    <CardHeader align="center" avatar={<Avatar src={partnerData.userId.picture} />} title={partnerData.userId.name} subheader={partnerData.userId.rating} />
                     <CardContent>
                         <Grid container spacing={0}>
                             <Grid item xs={6}>
