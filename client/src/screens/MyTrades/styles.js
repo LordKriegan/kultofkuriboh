@@ -10,8 +10,10 @@ export default makeStyles(theme =>
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 4),
         outline: 'none',
-        top: "25%",
-        left: "25%"
+        top: "10%",
+        left: "25%",
+        overflowY: 'scroll',
+        height: "80%"
       }
   })
 )
