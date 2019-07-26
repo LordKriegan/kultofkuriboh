@@ -22,7 +22,57 @@ class Trade {
             headers: {
               "Authorization": "Bearer " + User.getToken()
             }
-          })
+          });
+    }
+    /**
+     * @param {*} userId get all trades on a given user id
+     */
+    findAllTrades(userId) {
+        return axios.get("/api/trade/findAll/" + userId, {
+            headers: {
+                "Authorization": "Bearer " + User.getToken()
+            }
+        });
+    }
+    /**
+     * @param {*} tradeId get all information on a given trade id
+     */
+    findOneTrade(tradeId) {
+        return axios.get("/api/trade/findOne/" + tradeId, {
+            headers: {
+                "Authorization": "Bearer " + User.getToken()
+            }
+        });
+    }
+    /**
+     * @param {*} tradeId id of trade to update
+     * @param {*} accepted boolean flag for accept status
+     */
+    markAcceptStatus(tradeId, accepted) {
+        return axios.put("/api/trade/acceptStatus", {
+            id: tradeId,
+            acceptStatus: (accepted) ? "accept" : "reject"
+        }, {
+            headers: {
+                "Authorization": "Bearer " + User.getToken()
+            }
+        })
+    }
+    /**
+     * @param {*} tradeId id of trade to update
+     * @param {*} isSender bool flag check if user is sender or reciever
+     * @param {*} isRecieved bool flag to see if cards are recieved or not
+     */
+    markRecievedStatus(tradeId, isSender, isRecieved) {
+        return axios.put("/api/trade/recievedStatus", {
+            id: tradeId,
+            trader: (isSender) ? "sender" : "reciever",
+            recieved: (isRecieved) ? "yes" : "no"
+        }, {
+            headers: {
+                "Authorization": "Bearer " + User.getToken()
+            }
+        })
     }
 }
 
