@@ -15,22 +15,23 @@ module.exports = (io) => {
         });
         
         socket.on('newMessage', (data) => {
-            if (data.to in connectedUsers) {
-                connectedUsers[data.to].emit("newMessage", {from: data.userInfo, message: data.message})
+            console.log("incoming data:", data)
+            if (data.to._id in connectedUsers) {
+                connectedUsers[data.to._id].emit("newMessage", {from: data.from, to: data.to, roomId: data.roomId, message: data.message})
             }
-            const roomId = (data.to > data.from) ? data.to + data.from : data.from + data.to;
+            const roomId = (data.to._id > data.from._id) ? data.to._id + data.from._id : data.from._id + data.to._id;
             Chat.create({
                 roomId,
-                users: [data.to, data.from],
+                users: [data.to._id, data.from._id],
                 messages: [{
-                    to: data.to,
-                    from: data.from,
+                    to: data.to._id,
+                    from: data.from._id,
                     message: data.message
                 }]
             }).then(response => {
                 User.updateMany({
                     _id: {
-                        $in: [data.to, data.from]
+                        $in: [data.to._id, data.from._id]
                     }
                 }, {
                     $push: {
@@ -49,8 +50,8 @@ module.exports = (io) => {
                     }, {
                         $push: {
                             messages: {
-                                to: data.to,
-                                from: data.from,
+                                to: data.to._id,
+                                from: data.from._id,
                                 message: data.message
                             }
                         }
@@ -68,6 +69,7 @@ module.exports = (io) => {
         });
         socket.on('disconnect', (data) => {
             if (!socket.uId) return;
+            console.log("User disconnecting")
             delete connectedUsers[socket.uId];
         });
     });

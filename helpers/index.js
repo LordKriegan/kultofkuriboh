@@ -13,6 +13,7 @@ module.exports = {
           id: user._id,
           email: user.email,
           name: user.name,
+          picture: user.picture,
           exp: expire.getTime() / 1000,
         }
         return jwt.sign(userObj, process.env.JWT_SECRET)
