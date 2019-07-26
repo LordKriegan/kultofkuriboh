@@ -1,19 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import styles from './styles';
-import { User } from '../../api/';
-import ChatList from '../';
+import { ChatList, ChatWindow } from '../';
 
 const ChatBar = (props) => {
-    const [chatData, setChatData] = useState({})
-    useEffect(() => {
-        User
-            .findChats(User.getUser().id)
-            .then((response) => {
-                console.log(response.data);
-            })
-            .catch(err=>console.error(err));
-    }, [])
+
     const classes = styles();
     return (
         <Grid
@@ -25,10 +16,10 @@ const ChatBar = (props) => {
             className={classes.chatbar}
         >
             <Grid item xs={12} className={classes.chatlist}>
-                test
+                <ChatList />
             </Grid>
             <Grid item xs={12} className={classes.chatwindow}>
-                test
+                <ChatWindow />
             </Grid>
         </Grid>
     );

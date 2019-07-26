@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -9,12 +9,14 @@ import styles from './styles';
 import Typography from '@material-ui/core/Typography';
 import { User } from '../../api/';
 import { Link } from 'react-router-dom';
+import { ChatsContext } from '../../contexts/ChatsContext';
 //import edit button from materialui icons
 //import some kind of icons for trades/chats
 
 const ViewProfile = (props) => {
     const { email, name, picture, rating, biography, userId } = props.user
-    const classes = styles()
+    const classes = styles();
+    const { createNewChat } = useContext(ChatsContext)
     return (
         <Card>
             <CardHeader title={name} titleTypographyProps={{ align: "center" }} />
@@ -29,7 +31,7 @@ const ViewProfile = (props) => {
                     ? <Button variant="contained" onClick={props.edit}>Edit</Button>
                     : <>
                         <Link to={"/trade?id=" + userId}><Button variant="contained">Trade</Button></Link>
-                        <Button variant="contained">Chat</Button>
+                        <Button onClick={() => createNewChat(userId)} variant="contained">Chat</Button>
                     </>}
             </CardActions>
         </Card>

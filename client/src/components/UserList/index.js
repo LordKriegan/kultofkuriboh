@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom'
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -12,9 +12,11 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import { User } from '../../api/';
 import styles from './styles';
+import { ChatsContext } from '../../contexts/ChatsContext';
 const UserList = (props) => {
     const classes = styles();
     const myId = User.getUser().id;
+    const { createNewChat } = useContext(ChatsContext)
     return (
         <Card>
             <CardHeader title="Users" align="center" />
@@ -38,7 +40,7 @@ const UserList = (props) => {
                                         <TableCell>{elem.rating}</TableCell>
                                         <TableCell className={classes.userActions}>
                                             <Link to={"/trade?id=" + elem._id}><Button>Trade</Button></Link>
-                                            <Button>Chat</Button>
+                                            <Button onClick={() => createNewChat(elem._id)}>Chat</Button>
                                         </TableCell>
                                     </TableRow>);
                                 })}

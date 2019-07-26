@@ -1,20 +1,33 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext } from 'react'
 import styles from './styles';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-const ChatList = (props) => {
+import { User } from '../../api/'
+import { ChatsContext } from '../../contexts/ChatsContext';
+const ChatList = () => {
     const classes = styles();
+    const { chats, changeRoom } = useContext(ChatsContext)
     return (
         <List>
-            {(props.list.length)
-                ? props.list.map((elem, i) =>
-                    <ListItem key={i}>
-                        <ListItemText><Avatar src="" />Name Here</ListItemText>
-                        {(i < props.list.length - 1) ? <Divider /> : ""}
-                    </ListItem>)
+            {(chats.length)
+                ? chats.map((elem, i) => {
+                    
+                    const user = elem.users.filter(user => user._id !== User.getUser().id)
+                    return (
+                        <ListItem onClick={() =>changeRoom(i)} key={i}>
+                            <ListItemAvatar>
+                                <Avatar src={user[0].picture} />
+                            </ListItemAvatar>
+                            <ListItemText primary={user[0].name} />
+                            {(i < chats.length - 1) ? <Divider /> : ""}
+                        </ListItem>
+                    )
+                }
+                )
                 : ""
             }
         </List>

@@ -4,6 +4,7 @@ import queryStr from 'query-string';
 import { CardList, ViewProfile, EditProfile } from '../../components';
 import { User } from '../../api/';
 import styles from "./styles.js";
+
 const Profile = (props) => {
     const [userData, setUserData] = useState({
         email: "",
@@ -59,9 +60,9 @@ const Profile = (props) => {
             </Grid>
             <Grid className={classes.profile} item xs={12} md={4}>
                 {(loaded)
-                    ? (editUser) 
+                    ? (editUser)
                         ? <EditProfile edit={toggleEdit} setUserPic={setUserPic} user={userData} />
-                        : <ViewProfile edit={toggleEdit} user={userData} /> 
+                        : <ViewProfile edit={toggleEdit} user={userData} />
                     : ""}
             </Grid>
             <Grid className={classes.wants} item xs={12} md={4}>
