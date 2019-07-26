@@ -51,10 +51,10 @@ class User {
     localStorage.setItem("user", JSON.stringify(user))
   }
 
-   /**
-   * A method for updating the user's profile
-   * @param {*} userChanges changes user made to their profile
-   */
+  /**
+  * A method for updating the user's profile
+  * @param {*} userChanges changes user made to their profile
+  */
 
   async updateUser(userChanges) {
     const currentUser = this.getUser()
@@ -81,23 +81,23 @@ class User {
       haves,
       wants
     }, {
-      headers: {
-        "Authorization": "Bearer " + this.getToken()
-      }
-    });
+        headers: {
+          "Authorization": "Bearer " + this.getToken()
+        }
+      });
   }
- /**
-   * A method for finding user data for a given user id
-   * @param {*} id user id to look for
-   */
+  /**
+    * A method for finding user data for a given user id
+    * @param {*} id user id to look for
+    */
 
-   findOne(userId) {
-     return axios.get("/api/user/findOne/" + userId, {
+  findOne(userId) {
+    return axios.get("/api/user/findOne/" + userId, {
       headers: {
         "Authorization": "Bearer " + this.getToken()
       }
     })
-   }
+  }
 
   /**
    * 
@@ -130,18 +130,29 @@ class User {
       }
     })
   }
-    /**
- * A method for finding all users with a given card in their wants list
- * @param {*} set set of the card to look for
- * @param {*} card name of the card to look for
- */
-findWants(set, card) {
-  return axios.get("/api/user/findWants?set=" + encodeURIComponent(set) + "&name=" + encodeURIComponent(card), {
-    headers: {
-      "Authorization": "Bearer " + this.getToken()
-    }
-  })
-}
+  /**
+* A method for finding all users with a given card in their wants list
+* @param {*} set set of the card to look for
+* @param {*} card name of the card to look for
+*/
+  findWants(set, card) {
+    return axios.get("/api/user/findWants?set=" + encodeURIComponent(set) + "&name=" + encodeURIComponent(card), {
+      headers: {
+        "Authorization": "Bearer " + this.getToken()
+      }
+    })
+  }
+  /**
+   * get all chats for a given user
+   * @param {*} userId of user to search for
+   */
+  findChats(userId) {
+    return axios.get("/api/chats/" + userId, {
+      headers: {
+        "Authorization": "Bearer " + this.getToken()
+      }
+    })
+  }
 
 }
 
