@@ -7,7 +7,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Save from '@material-ui/icons/Save';
+import styles from './styles';
 const Collection = () => {
+    const classes = styles()
     const [cardData, setCardData] = useState({
         cardName: "",
         haves: [],
@@ -80,14 +82,14 @@ const Collection = () => {
     }
     return (
         <Grid container spacing={2}>
-            <Grid item xs={12} md={5}>
+            <Grid item xs={12} md={5} className={classes.searcher}>
                 <CardSearcher searchType="cards" changeCard={setCardName} addToList={addToList} />
             </Grid>
-            <Grid item xs={12} md={7}>
-                <Grid item xs={12}>
+            <Grid item xs={12} md={7} className={classes.searcher}>
+                <Grid item xs={12} className={classes.viewer}>
                     <CardViewer cardName={cardData.cardName} />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} className={classes.collection}>
                     <Card>
                         <CardContent>
                             <Grid container spacing={2}>

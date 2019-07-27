@@ -13,15 +13,6 @@ const server = require('http').createServer(app)
 const io = require('socket.io').listen(server)
 const jwt = require('express-jwt')
 
-//https://stackoverflow.com/questions/27117337/exclude-route-from-express-middleware based on answer by Geelie
-const unless = (middleware, ...paths) => {
-  console.log("running unless mware")
-  return (req, res, next) => {
-    console.log (path, "===", req.path)
-    paths.some(path => path === req.path) ? next() : middleware(req, res, next)
-  }
-}
-
 //seperated for sake of cleanliness
 require('./privatemessaging')(io)
 

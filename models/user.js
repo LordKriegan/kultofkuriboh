@@ -24,16 +24,9 @@ const User = new Schema({
     picture: { type: String, default: "/assets/images/defaultUser.png" },
     biography: { type: String, default: "This user does not have a biography.", maxlength: 500 },
     address: { type: String, required: true },
-    pending: { type: [Card] },
     haves: { type: [Card] },
     wants: { type: [Card] },
     chats: { type: [String], ref: "Chat" },
     trades: { type: [String] }
 })
-// User.virtual('userChats', {
-//     ref: "Chat",
-//     localField: "chats",
-//     foreignField: "roomId",
-//     justOne: false
-// })
 module.exports = model("User", User);

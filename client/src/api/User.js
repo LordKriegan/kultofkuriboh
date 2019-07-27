@@ -13,7 +13,14 @@ class User {
       this.setTokenInfo({ token, user })
     }
   }
-
+  /**
+   * Logs out the user 
+   */
+  logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.reload();
+  }
   /**
    * Asynchronous method for registering a user, verifying and setting token
    * @param {*} registration registration info including address, name, email, password

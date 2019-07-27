@@ -42,7 +42,7 @@ const EditProfile = (props) => {
     }
     
     return (
-        <Card>
+        <Card className={classes.cardStyle}>
             <CardHeader title="Edit Profile" titleTypographyProps={{ align: "center" }} />
             <CardContent className={classes.profileBody}>
                 <ReactFileStack

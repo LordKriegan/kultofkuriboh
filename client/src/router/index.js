@@ -31,7 +31,6 @@ export default () => {
         <AppDrawer />
         <Switch>
           <PublicRoute path="/" component={screens.Auth} exact />
-          <PrivateRoute path="/home" component={screens.Home} exact />
           <PrivateRoute path="/profile" component={screens.Profile} exact />
           <PrivateRoute path="/trade" component={screens.Trade} exact />
           <PrivateRoute path="/mytrades" component={screens.MyTrades} exact />

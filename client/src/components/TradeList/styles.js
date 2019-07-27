@@ -11,8 +11,7 @@ export default makeStyles(theme =>
         backgroundColor: theme.palette.background.paper
     },
     gridList: {
-        flexWrap: 'nowrap',
-        // transform: 'translateZ(0)'
+        flexWrap: 'nowrap'
     },
     titleBar: {
         background:
