@@ -3,7 +3,7 @@ import AppRouter from "../src/router"
 import { MuiThemeProvider } from "@material-ui/core/styles"
 import theme from "./theme"
 import "./App.css"
-
+require('dotenv').config()
 function App() {
   return (
     
