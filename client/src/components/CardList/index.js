@@ -27,7 +27,7 @@ const CardList = (props) => {
       
     }
     return (
-        <Card>
+        <Card style={{height: "100%", overflowY: "auto"}}>
             <CardHeader title={props.title} titleTypographyProps={{ align: "center" }} />
             <CardContent>
                 <Table>

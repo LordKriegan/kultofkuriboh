@@ -7,8 +7,10 @@ export default makeStyles(themes =>
         },
         haves: {
             order: 1,
+            height: "90vh",
             [themes.breakpoints.down("sm")]: {
-                order: 2
+                order: 2,
+                height: "20vh"
             }
         },
         profile: {

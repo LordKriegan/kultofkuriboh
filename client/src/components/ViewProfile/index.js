@@ -10,15 +10,13 @@ import Typography from '@material-ui/core/Typography';
 import { User } from '../../api/';
 import { Link } from 'react-router-dom';
 import { ChatsContext } from '../../contexts/ChatsContext';
-//import edit button from materialui icons
-//import some kind of icons for trades/chats
 
 const ViewProfile = (props) => {
     const { email, name, picture, rating, biography, userId } = props.user
     const classes = styles();
     const { createNewChat } = useContext(ChatsContext)
     return (
-        <Card>
+        <Card style={{height: "100%", overflowY: "auto"}}>
             <CardHeader title={name} titleTypographyProps={{ align: "center" }} />
             <CardContent className={classes.profileBody}>
                 <Avatar className={classes.avatar} src={picture} />

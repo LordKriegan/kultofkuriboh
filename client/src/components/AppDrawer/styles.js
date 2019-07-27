@@ -10,6 +10,9 @@ export default makeStyles(theme =>
         },
         menuButton: {
             marginRight: theme.spacing(2)
+        },
+        appbar: {
+            background: "linear-gradient(to bottom, #7d7e7d 0%,#0e0e0e 100%)"
         }
     })
 )

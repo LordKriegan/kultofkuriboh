@@ -21,12 +21,12 @@ const Navigation = props => {
                     </Link>
                 </ListItem>
                 <ListItem button>
-                    <Link to="/trades">
+                    <Link to="/mytrades">
                         <ListItemText primary={"My Trades"} />
                     </Link>
                 </ListItem>
                 <ListItem button>
-                    <Link to="/browse">
+                    <Link to="/findusers">
                         <ListItemText primary={"Browse"} />
                     </Link>
                 </ListItem>
@@ -34,11 +34,6 @@ const Navigation = props => {
                 <ListItem button>
                     <Link to="/profile">
                         <ListItemText primary={"My Profile"} />
-                    </Link>
-                </ListItem>
-                <ListItem button>
-                    <Link to="/messages">
-                        <ListItemText primary={"Messages"} />
                     </Link>
                 </ListItem>
             </List>

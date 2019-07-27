@@ -10,13 +10,6 @@ const TradeThumbnail = (props) => {
     const bool = props.reciever.userId._id === User.getUser().id;
     const myData = (bool) ? props.reciever : props.sender;
     const partnerData = (bool) ? props.sender : props.reciever;
-    // if (props.reciever.userId._id === User.getUser().id) {
-    //     myData = props.reciever;
-    //     partnerData = props.sender;
-    // } else {
-    //     myData = props.sender;
-    //     partnerData = props.reciever;
-    // }
 
     return (
         <Grid container spacing={0}>

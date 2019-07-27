@@ -15,6 +15,7 @@ import TextField from "@material-ui/core/TextField"
 import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box'
+import InputAdornment from '@material-ui/core/InputAdornment';
 //material-ui icons
 import Search from '@material-ui/icons/Search';
 import Add from '@material-ui/icons/Add'
@@ -73,15 +74,28 @@ const CardSearcher = (props) => {
         }
     }
     return (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} >
             <Grid item xs={12}>
 
                 <FormGroup>
                     <Box display="flex" flexDirection="row">
-                        <TextField style={{ width: "100%" }} id="cardName" label="Card Name" onChange={updateInput} value={cards.cardName} />
-                        <IconButton onClick={searchCard} start="edge" color="primary" aria-label="Search Card">
-                            <Search />
-                        </IconButton>
+                        <TextField
+                            style={{ width: "100%" }}
+                            id="cardName"
+                            label="Card Name"
+                            onChange={updateInput}
+                            value={cards.cardName}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton onClick={searchCard} start="edge" color="primary" aria-label="Search Card">
+                                            <Search />
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
+                        />
+
                     </Box>
                 </FormGroup>
             </Grid>
@@ -90,7 +104,7 @@ const CardSearcher = (props) => {
                 <Card>
                     <CardContent>
                         {(cards.cardList)
-                            ? <Table>
+                            ? <Table padding="none">
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Print Tag</TableCell>

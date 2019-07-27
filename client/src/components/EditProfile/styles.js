@@ -24,6 +24,10 @@ export default makeStyles(theme =>
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center"
+        },
+        cardStyle: {
+            height: "100%",
+            overflowY: "auto"
         }
     })
   );

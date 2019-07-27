@@ -6,9 +6,11 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import Chat from '@material-ui/icons/Chat';
+import { LogOut } from '../../customIcons';
 import { Navigation, Chats } from '../'
 import styles from './styles';
 import { ChatsContext } from '../../contexts/ChatsContext';
+import { User } from '../../api';
 const AppDrawer = () => {
     const classes = styles();
     const [state, setState] = useState({
@@ -23,17 +25,19 @@ const AppDrawer = () => {
         setState({ ...state, [side]: open });
     };
     const { isChatOpen, toggleChatBar } = useContext(ChatsContext)
-
     return (
         <div>
             <div className={classes.root}>
-                <AppBar position="static">
+                <AppBar className={classes.appbar} position="static">
                     <Toolbar>
-                        <IconButton  onClick={toggleDrawer('left', true)} edge="start" className={classes.menuButton} color="inherit" aria-label="Menu">
+                        <IconButton onClick={toggleDrawer('left', true)} edge="start" className={classes.menuButton} color="inherit" aria-label="Menu">
                             <HomeIcon />
                         </IconButton>
-                        <IconButton  onClick={toggleChatBar} edge="start" className={classes.menuButton} color="inherit" aria-label="Menu">
+                        <IconButton onClick={toggleChatBar} edge="start" className={classes.menuButton} color="inherit" aria-label="Menu">
                             <Chat />
+                        </IconButton>
+                        <IconButton onClick={User.logout} edge="start" color="inherit" aria-label="Logout">
+                            <LogOut />
                         </IconButton>
                         <Typography align="center" variant="h3" className={classes.root}>
                             YGO TRADE HUB

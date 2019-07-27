@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import styles from './styles';
+
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -9,7 +9,6 @@ import Avatar from '@material-ui/core/Avatar';
 import { User } from '../../api/'
 import { ChatsContext } from '../../contexts/ChatsContext';
 const ChatList = () => {
-    const classes = styles();
     const { chats, changeRoom } = useContext(ChatsContext)
     return (
         <List>

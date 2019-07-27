@@ -58,6 +58,7 @@ export default function Auth({ history }) {
           onChange={updateLoginFields}
           value={loginPassword || ""}
           label="Password"
+          type="password"
         />
         <div>
           <Button onClick={handleLogin} text="Login" type="contained" />
@@ -78,6 +79,7 @@ export default function Auth({ history }) {
           onChange={updateRegisterFields}
           value={password || ""}
           label="Password"
+          type="password"
         />
         <div>
           <Button onClick={handleRegister} text="Register" type="contained" />
