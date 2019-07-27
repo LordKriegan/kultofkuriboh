@@ -123,7 +123,7 @@ class User {
    * @param {*} token the jwt token
    */
   verifyToken(token) {
-    return jwt.verify(token, "KultofKuriboh")
+    return jwt.verify(token, "KultOfKuriboh")
   }
   /**
  * A method for finding all users with a given card in their haves list
