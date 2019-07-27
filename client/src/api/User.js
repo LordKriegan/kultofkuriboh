@@ -123,7 +123,7 @@ class User {
    * @param {*} token the jwt token
    */
   verifyToken(token) {
-    return jwt.verify(token, process.env.REACT_APP_JWT_SECRET)
+    return jwt.verify(token, "KultofKuriboh")
   }
   /**
  * A method for finding all users with a given card in their haves list
