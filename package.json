@@ -4,21 +4,29 @@
   "description": "A yugioh trading app that tracks (un/)successful trades so the user can make an informed decision before trading.",
   "main": "server.js",
   "dependencies": {
+    "aes256": "^1.0.4",
+    "axios": "^0.19.0",
     "concurrently": "^4.1.1",
-    "dotenv": "^8.0.0",
-    "express-jwt": "^5.3.1",
     "cross-env": "^5.2.0",
+    "dotenv": "^8.0.0",
     "express": "^4.17.1",
+    "express-jwt": "^5.3.1",
     "if-env": "^1.0.4",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.6.4"
+    "lodash": "^4.17.14",
+    "mongoose": "^5.6.4",
+    "morgan": "^1.9.1",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:dev:servOnly": "cross-env NODE_ENV=development node server.js",
+    "start:dev:servOnly": "cross-env NODE_ENV=development nodemon server.js",
     "start:prod": "node server.js",
-    "start:dev": "cross-env NODE_ENV=development concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "start:dev": "cross-env NODE_ENV=development concurrently \"nodemon server.js\" \"npm run client\"",
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
