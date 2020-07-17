@@ -10,7 +10,7 @@
     "dotenv": "^8.0.0",
     "filestack-react": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "query-string": "^6.8.1",
     "react": "^16.8.6",
